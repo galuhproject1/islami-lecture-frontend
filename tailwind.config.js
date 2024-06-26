@@ -10,6 +10,9 @@ export default {
         mulish: ['Mulish', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },
+      colors: {
+        'primary': '#11142D',
+      }
     },
   },
   plugins: [],
