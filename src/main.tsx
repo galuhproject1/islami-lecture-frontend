@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Login from "./routes/auth/login/index.tsx";
 import MainLayout from "./components/layout/MainLayout.tsx";
 import About from "./routes/about/index.tsx";
 import Course from "./routes/course/index.tsx";
@@ -11,6 +10,7 @@ import Blog from "./routes/blog/index.tsx";
 import Tutor from "./routes/tutor/index.tsx";
 import Dashboard from "./routes/dashboard/index.tsx";
 import Explore from "./routes/dashboard/explore/index.tsx";
+import Register from "./routes/auth/register/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -54,8 +54,8 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/auth/login",
-    element: <Login />,
+    path: "/auth/register",
+    element: <Register />,
   },
   {
     path: "/dashboard",

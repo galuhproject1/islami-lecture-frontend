@@ -35,11 +35,11 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="font-inter text-[18px] py-2 border-b border-[#E5E5E5] w-full">
-      <div className="container mx-auto px-auto flex items-center justify-between">
+    <div className="font-inter text-[18px] py-2 border-b border-[#E5E5E5] w-full bg-white">
+      <div className={`${pathname.includes("dashboard") ? "px-8" : "container mx-auto px-auto"} flex items-center justify-between`}>
         <div className="text-primary flex items-center gap-2">
           <img src={Logo} alt="logo" />
-          <p className="text-[24px] font-bold">IslamicLecture</p>
+          <p className="text-[24px] font-bold cursor-pointer" onClick={() => navigate("/")}>IslamicLecture</p>
         </div>
         <ul className="md:flex md:items-center md:gap-8">
           {url.map((item) => (

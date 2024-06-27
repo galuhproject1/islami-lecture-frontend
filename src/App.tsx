@@ -1,12 +1,16 @@
 import "./App.css";
+import AboutSection from "./components/section/home/About";
+import BlogSection from "./components/section/home/Blog";
+import CourseSection from "./components/section/home/Course";
+import HeroSection from "./components/section/home/Hero";
 
 function App() {
   return (
-    <div className="">
-      <div style={{ fontFamily: "Mulish", color: "red" }}>mulish</div>
-      <div style={{ fontFamily: "Inter" }}>Inter</div>
-      <div className="font-mulish">Mulish</div>
-      <div className="font-inter">Inter</div>
+    <div className="flex flex-col gap-4 px-8">
+      <HeroSection />
+      <CourseSection />
+      <AboutSection />
+      <BlogSection />
     </div>
   );
 }

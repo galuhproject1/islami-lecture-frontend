@@ -2,7 +2,7 @@ import Logotext from "../../assets/images/logotext.png";
 
 const Footer = () => {
   return (
-    <div className="fixed bottom-0 w-full">
+    <div className="w-full">
       <div className="bg-[#3D60DE]">
         <div className="container mx-auto px-auto mt-24">
           <div className="flex items-center justify-between p-4 text-white">
