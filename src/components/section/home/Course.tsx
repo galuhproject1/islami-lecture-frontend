@@ -3,6 +3,7 @@ import PencilIcon from "../../../assets/images/icon/pencil.svg";
 import CodeIcon from "../../../assets/images/icon/code.svg";
 import SpeakerICon from "../../../assets/images/icon/speaker.svg";
 import CourseCard from "../../reusable/CourseCard";
+import "./styles.css"
 
 type filter = {
   name: string;
@@ -38,7 +39,7 @@ const CourseSection = () => {
     },
   ];
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center relative overflow-hidden">
       <h1 className="text-[18px] font-bold text-[#FF4363]">OUR COURSE</h1>
       <h1 className="text-[45px] font-bold text-primary">
         Telusuri kursus populer kami.
@@ -65,6 +66,7 @@ const CourseSection = () => {
       <button className="bg-[#FF4363] text-white py-4 px-8 rounded-xl font-bold text-[16px] mt-12">
         Browse All
       </button>
+      <div className="bg-radial-gradient-redvelvet"></div>
     </div>
   );
 };

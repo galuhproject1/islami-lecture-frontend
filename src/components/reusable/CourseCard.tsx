@@ -7,7 +7,7 @@ const CourseCard = () => {
     <div className="grid grid-cols-1 md:grid-cols-3 md:justify-between font-inter gap-8">
       {CourseData.map((item, index) => (
         <div
-          className="w-[405px] h-[520px] rounded-xl shadow-md p-4"
+          className="w-[405px] h-[520px] rounded-xl shadow-md p-4 bg-white"
           key={index}
         >
           <div className="relative">
