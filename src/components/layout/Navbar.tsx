@@ -103,8 +103,11 @@ const Navbar = () => {
           <div
             className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50 flex flex-col items-center justify-center"
             onClick={() => setShowLogin(false)}
+            onDoubleClick={() => setShowLogin(false)}
           >
-            <MainCard />
+            <div onClick={(e) => e.stopPropagation()}>
+              <MainCard type="login" />
+            </div>
           </div>
         )}
 

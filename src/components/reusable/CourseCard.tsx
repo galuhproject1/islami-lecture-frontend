@@ -1,8 +1,10 @@
 import { CourseData } from "../../libs/Data/CourseData";
 import { MdStarRate } from "react-icons/md";
 import { priceFormat } from "../../utils/priceFormat";
+import { useNavigate } from "react-router-dom";
 
 const CourseCard = () => {
+  const navigate = useNavigate();
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 md:justify-between font-inter gap-8">
       {CourseData.map((item, index) => (
@@ -39,7 +41,7 @@ const CourseCard = () => {
                   Rp {priceFormat(item.price + 50000)}
                 </p>
               </div>
-              <button className="bg-[#3D60DE] text-white p-4 rounded-xl font-bold text-[16px]">
+              <button className="bg-[#3D60DE] text-white p-4 rounded-xl font-bold text-[16px]" onClick={() => {navigate(`/e-course/${item.id}`)}}>
                 Belajar Sekarang
               </button>
             </div>

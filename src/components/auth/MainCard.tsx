@@ -1,7 +1,13 @@
 import Ilustration from "../../assets/images/ilustration/ilustration1.svg";
 import Loginform from "./Loginform";
+import RegisterForm from "./RegisterForm";
+import UploadForm from "./UploadForm";
 
-const MainCard = () => {
+type Props = {
+  type: string;
+};
+const MainCard = ({type} : Props) => {
+
   return (
     <div className="container mx-auto px-auto">
       <div className="h-screen flex items-center justify-center font-inter">
@@ -11,7 +17,9 @@ const MainCard = () => {
             <img src={Ilustration} alt="ilustration" />
           </div>
           <div className="w-[60%] py-8 px-12">
-            <Loginform />
+            {type === "login" && <Loginform />}
+            {type === "register" && <RegisterForm />}
+            {type === "upload" && <UploadForm />}
           </div>
         </div>
       </div>

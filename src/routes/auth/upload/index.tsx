@@ -1,15 +1,15 @@
 import MainCard from "../../../components/auth/MainCard";
 import Navbar from "../../../components/layout/Navbar";
 
-const Register = () => {
+const UploadPage = () => {
   return (
     <div className="bg-[#F6F8FD]">
       <div className="fixed top-0 w-full">
         <Navbar />
       </div>
-      <MainCard type="register" />
+      <MainCard type="upload" />
     </div>
   );
 };
 
-export default Register;
+export default UploadPage;

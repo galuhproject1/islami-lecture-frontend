@@ -4,7 +4,7 @@ const TestimoniCard = () => {
     return (
         <div className="flex justify-between gap-8">
             {TestimoniData.map((testimoni) => (
-                <div>
+                <div key={testimoni.id}>
                     <div className="flex gap-4 items-center">
                         <img src={testimoni.image} alt="testimoni" className="w-[64px] h-[64px] rounded-xl" />
                         <div>

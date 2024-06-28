@@ -1,9 +1,9 @@
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import CustomInput from "../reusable/CustomInput";
 import { useNavigate } from "react-router-dom";
 
-const Loginform = () => {
-  const navigate = useNavigate();
+const RegisterForm = () => {
+    const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -25,6 +25,7 @@ const Loginform = () => {
       >
         Sign in
       </Typography>
+      <Typography sx={{ marginBottom: 2, color: "#6E7991" }}>Lengkapi form di bawah dengan menggunakan data Anda yang valid</Typography>
       <Box sx={{ marginBottom: 2 }}>
         <Typography
           sx={{
@@ -34,11 +35,24 @@ const Loginform = () => {
             fontFamily: "Mulish",
           }}
         >
-          Email
+          Nama (maks 50 karakter)
         </Typography>
-        <CustomInput placeholder="masukkan alamat email aktif" type="email" />
+        <CustomInput placeholder="contoh: Agus Pujianto" type="email" />
       </Box>
       <Box sx={{ marginBottom: 2 }}>
+        <Typography
+          sx={{
+            fontSize: "16px",
+            fontWeight: 600,
+            color: "#1F2F54",
+            fontFamily: "Mulish",
+          }}
+        >
+          Email Address
+        </Typography>
+        <CustomInput placeholder="contoh: Agus Pujianto" type="email" />
+      </Box>
+      <Box sx={{ marginBottom: 4 }}>
         <Typography
           sx={{
             fontSize: "16px",
@@ -50,17 +64,6 @@ const Loginform = () => {
           Password
         </Typography>
         <CustomInput placeholder="masukkan password" type="password" />
-        <Typography
-          sx={{
-            fontSize: "14px",
-            fontWeight: 400,
-            color: "#1F2F54",
-            fontFamily: "Mulish",
-            textAlign: "right",
-          }}
-        >
-          Lupa password
-        </Typography>
       </Box>
       <Box
         sx={{
@@ -74,7 +77,7 @@ const Loginform = () => {
           variant="contained"
           sx={{
             width: "100%",
-            height: "48px",
+            height: "60px",
             backgroundColor: "#FF4363",
             borderRadius: "8px",
             textTransform: "none",
@@ -86,54 +89,13 @@ const Loginform = () => {
               backgroundColor: "#FF4363",
             },
           }}
+          onClick={() => navigate("/auth/upload")}
         >
-          Signin
-        </Button>
-        <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            height: "48px",
-            backgroundColor: "#CFCFDB",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#1F2F54",
-            "&:hover": {
-              backgroundColor: "#CFCFDB",
-            },
-          }}
-          onClick={() => navigate("/auth/register")}
-        >
-          Create Account
+          Selanjutnya
         </Button>
       </Box>
-      <Divider sx={{ marginBottom: 2, borderColor: "#979797", borderWidth: 1 }} />
-      <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            height: "48px",
-            backgroundColor: "#1F2F54",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#FFFFFF",
-            lineHeight: "32px",
-            "&:hover": {
-              backgroundColor: "#1F2F54",
-            },
-          }}
-          onClick={() => navigate("/auth/register")}
-        >
-          Masuk/Daftar
-        </Button>
     </Box>
   );
 };
 
-export default Loginform;
+export default RegisterForm;

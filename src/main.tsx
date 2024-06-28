@@ -11,6 +11,7 @@ import Tutor from "./routes/tutor/index.tsx";
 import Dashboard from "./routes/dashboard/index.tsx";
 import Explore from "./routes/dashboard/explore/index.tsx";
 import Register from "./routes/auth/register/index.tsx";
+import UploadPage from "./routes/auth/upload/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/e-course/:id",
+    element: (
+      <MainLayout>
+        <Course />
+      </MainLayout>
+    ),
+  },
+  {
     path: "/blog",
     element: (
       <MainLayout>
@@ -56,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: "/auth/register",
     element: <Register />,
+  },
+  {
+    path: "/auth/upload",
+    element: <UploadPage />,
   },
   {
     path: "/dashboard",
