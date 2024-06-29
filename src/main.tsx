@@ -12,6 +12,7 @@ import Dashboard from "./routes/dashboard/index.tsx";
 import Explore from "./routes/dashboard/explore/index.tsx";
 import Register from "./routes/auth/register/index.tsx";
 import UploadPage from "./routes/auth/upload/index.tsx";
+import SurveyPage from "./routes/auth/survey/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
   {
     path: "/auth/upload",
     element: <UploadPage />,
+  },
+  {
+    path: "/auth/survey",
+    element: <SurveyPage />,
   },
   {
     path: "/dashboard",

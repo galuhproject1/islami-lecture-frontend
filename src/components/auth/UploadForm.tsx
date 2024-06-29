@@ -1,12 +1,13 @@
-import { Box, Button, TextField, Typography, styled } from "@mui/material";
-import CustomInput from "../reusable/CustomInput";
+import { Box, Button, MenuItem, Select, SelectChangeEvent, TextField, Typography, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 const UploadForm = () => {
   const navigate = useNavigate();
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [target, setTarget] = useState("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -16,7 +17,10 @@ const UploadForm = () => {
     }
   };
 
-  console.log(fileName)
+  const handleChangeTarget = (event: SelectChangeEvent) => {
+    setTarget(event.target.value as string);
+  };
+
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -39,7 +43,20 @@ const UploadForm = () => {
         fontFamily: "Inter",
       }}
     >
-        <img src={filePreview ?? ""} alt="preview" style={{ width: "100%" }} />
+      <Box
+        sx={{
+          marginBottom: 2,
+          width: "90px",
+          height: "90px",
+          borderRadius: "50%",
+          background: "#E8E8E8",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {filePreview ? <img src={filePreview} alt="Preview" className="w-[90px] h-[90px] rounded-full" /> : <IoCloudUploadOutline size={24} className="font-bold" />}
+      </Box>
       <Typography
         variant="h4"
         sx={{
@@ -65,7 +82,10 @@ const UploadForm = () => {
           Upload Avatar
         </Typography>
         <Box sx={{ position: "relative", width: "100%" }}>
-          <TextField sx={{ width: "100%" }} value={fileName ? fileName : "Tidak ada file terpilih"} />
+          <TextField
+            sx={{ width: "100%" }}
+            value={fileName ? fileName : "Tidak ada file terpilih"}
+          />
           <Button
             component="label"
             role={undefined}
@@ -88,7 +108,10 @@ const UploadForm = () => {
             }}
           >
             Browse
-            <VisuallyHiddenInput type="file" onChange={(e) => handleFileChange(e)} />
+            <VisuallyHiddenInput
+              type="file"
+              onChange={(e) => handleFileChange(e)}
+            />
           </Button>
         </Box>
       </Box>
@@ -103,7 +126,18 @@ const UploadForm = () => {
         >
           Target Personal
         </Typography>
-        <CustomInput placeholder="contoh: Agus Pujianto" type="email" />
+        <Select
+          sx={{ width: "100%" }}
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={target}
+          placeholder="Pilih target personal"
+          onChange={handleChangeTarget}
+        >
+          <MenuItem value={"bahasaArab"}>Bahasa Arab</MenuItem>
+          <MenuItem value={"sejarahIslam"}>Sejarah Islam</MenuItem>
+          <MenuItem value={"fiqih"}>Fiqih</MenuItem>
+        </Select>
       </Box>
       <Box
         sx={{
@@ -129,7 +163,7 @@ const UploadForm = () => {
               backgroundColor: "#FF4363",
             },
           }}
-          onClick={() => navigate("/auth/upload")}
+          onClick={() => navigate("/auth/survey")}
         >
           Selanjutnya
         </Button>
@@ -149,7 +183,7 @@ const UploadForm = () => {
               backgroundColor: "#CFCFDB",
             },
           }}
-          onClick={() => navigate("/auth/upload")}
+          onClick={() => navigate("/auth/survey")}
         >
           Lewati
         </Button>
