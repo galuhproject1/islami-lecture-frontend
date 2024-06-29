@@ -13,11 +13,21 @@ const MainLayout = ({ children }: Props) => {
   return (
     <div>
       <Navbar />
-      <div className="flex">
-        <div className={`${pathname.includes("dashboard") ? "block" : "hidden"} w-[300px] border-r border-[#E5E5E5] min-h-screen`}>
+      <div className="flex bg-[#F7F7FC]">
+        <div
+          className={`${
+            pathname.includes("dashboard") ? "block" : "hidden"
+          } w-[300px] border-r border-[#E5E5E5] min-h-screen`}
+        >
           <Sidebar />
         </div>
-      <div className={`${pathname.includes("dashboard") ? "p-8" : "p-0"} container mx-auto px-auto`}>{children}</div>
+        <div
+          className={`${
+            pathname.includes("dashboard") ? "p-8" : "p-0"
+          } container mx-auto px-auto`}
+        >
+          {children}
+        </div>
       </div>
       <div className={`${pathname.includes("dashboard") ? "hidden" : "block"}`}>
         <Footer />

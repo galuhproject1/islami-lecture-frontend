@@ -13,6 +13,7 @@ import Explore from "./routes/dashboard/explore/index.tsx";
 import Register from "./routes/auth/register/index.tsx";
 import UploadPage from "./routes/auth/upload/index.tsx";
 import SurveyPage from "./routes/auth/survey/index.tsx";
+import CourseDetail from "./routes/course/[id].tsx";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
     path: "/e-course/:id",
     element: (
       <MainLayout>
-        <Course />
+        <CourseDetail />
       </MainLayout>
     ),
   },

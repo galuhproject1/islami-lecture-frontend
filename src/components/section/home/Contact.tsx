@@ -2,7 +2,7 @@ import "./styles.css"
 
 const ContactSection = () => {
   return (
-    <div className="relative flex flex-col justify-center items-center text-center p-8 font-inter md:px-24 space-y-8">
+    <div className="relative flex flex-col justify-center items-center text-center p-8 font-inter md:px-24 space-y-8 overflow-hidden">
       <div className="bg-radial-gradient-purple"></div>
       <h1 className="text-[45px] font-[700] text-primary">
         Plans that scale with your audience
@@ -12,7 +12,7 @@ const ContactSection = () => {
         generate high-quality leads. We care about what works and what doesn't,
         what's effective and what's not.
       </p>
-      <div className="relative">
+      <div className="relative z-10">
         <input
           type="text"
           placeholder="Enter Your Email address"
