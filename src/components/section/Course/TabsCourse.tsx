@@ -1,5 +1,6 @@
 import { Box, Tabs, Tab } from "@mui/material";
 import { useState } from "react";
+import TabOne from "./Tabs/TabOne";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,7 +53,12 @@ const TabsCourse = () => {
           onChange={handleChange}
           aria-label="basic tabs example"
           textColor="primary"
-          indicatorColor="primary"
+          indicatorColor="secondary"
+          sx={{
+            ".MuiTabs-button-selected": {
+              fontWeight: 700,
+            },
+          }}
         >
           <Tab label="Overview" {...a11yProps(0)} />
           <Tab label="Modul Pembelajaran" {...a11yProps(1)} />
@@ -61,16 +67,16 @@ const TabsCourse = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <TabOne />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <TabOne />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <TabOne />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        Item four
+        <TabOne />
       </CustomTabPanel>
     </Box>
   );

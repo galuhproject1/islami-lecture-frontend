@@ -3,8 +3,10 @@ import AccordionCourse from "../../reusable/AccordionCourse";
 import VideoCourse from "./VideoCourse";
 import TabsCourse from "./TabsCourse";
 import ReviewCourse from "./ReviewCourse";
+import { useNavigate } from "react-router-dom";
 
 const DetailCourse = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -26,6 +28,14 @@ const DetailCourse = () => {
       >
         <VideoCourse />
         <TabsCourse />
+        <Box sx={{ backgroundColor: "white", padding: 4, borderRadius: "8px" }}>
+          <Typography
+            sx={{ fontWeight: 700, fontSize: "24px", color: "primary", my: 2 }}
+          >
+            Modul Pembelajaran
+          </Typography>
+        <AccordionCourse />
+        </Box>
         <ReviewCourse />
       </Box>
 
@@ -77,6 +87,7 @@ const DetailCourse = () => {
                 backgroundColor: "#3D60DE",
               },
             }}
+            onClick={() => navigate("/checkout")}
           >
             Belajar Sekarang
           </Button>
@@ -90,11 +101,12 @@ const DetailCourse = () => {
               fontSize: "16px",
               fontWeight: 700,
               fontFamily: "Inter",
-              color: "#1F2F54",
+              color: "secondary",
               "&:hover": {
-                backgroundColor: "#CFCFDB",
+                backgroundColor: "secondary",
               },
             }}
+            color="secondary"
           >
             Simpan untuk belajar nanti
           </Button>

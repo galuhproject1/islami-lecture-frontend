@@ -1,9 +1,40 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import CustomInput from "../reusable/CustomInput";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Loginform = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState<string>("");
+
+  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handleLogin = () => {
+    let role = "";
+
+    if (email === "user@gmail.com") {
+      role = "user";
+    } else if (email === "mentor@gmail.com") {
+      role = "mentor";
+    } else {
+      role = "unknown";
+    }
+
+    const data = {
+      email: email,
+      role: role,
+    };
+
+    localStorage.setItem("userData", JSON.stringify(data));
+    alert(`Logged in as ${role}`);
+  };
+
+  const userData = localStorage.getItem("userData");
+  const role = userData ? JSON.parse(userData).role : null;
+  console.log(role);
+
   return (
     <Box
       sx={{
@@ -36,7 +67,12 @@ const Loginform = () => {
         >
           Email
         </Typography>
-        <CustomInput placeholder="masukkan alamat email aktif" type="email" />
+        <CustomInput
+          placeholder="masukkan alamat email aktif"
+          type="email"
+          onChange={handleChangeEmail}
+          value={email}
+        />
       </Box>
       <Box sx={{ marginBottom: 2 }}>
         <Typography
@@ -86,6 +122,7 @@ const Loginform = () => {
               backgroundColor: "#FF4363",
             },
           }}
+          onClick={handleLogin}
         >
           Signin
         </Button>
@@ -110,28 +147,30 @@ const Loginform = () => {
           Create Account
         </Button>
       </Box>
-      <Divider sx={{ marginBottom: 2, borderColor: "#979797", borderWidth: 1 }} />
+      <Divider
+        sx={{ marginBottom: 2, borderColor: "#979797", borderWidth: 1 }}
+      />
       <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            height: "48px",
+        variant="contained"
+        sx={{
+          width: "100%",
+          height: "48px",
+          backgroundColor: "#1F2F54",
+          borderRadius: "8px",
+          textTransform: "none",
+          fontSize: "16px",
+          fontWeight: 700,
+          fontFamily: "Inter",
+          color: "#FFFFFF",
+          lineHeight: "32px",
+          "&:hover": {
             backgroundColor: "#1F2F54",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#FFFFFF",
-            lineHeight: "32px",
-            "&:hover": {
-              backgroundColor: "#1F2F54",
-            },
-          }}
-          onClick={() => navigate("/auth/register")}
-        >
-          Masuk/Daftar
-        </Button>
+          },
+        }}
+        onClick={() => navigate("/auth/register")}
+      >
+        Masuk/Daftar
+      </Button>
     </Box>
   );
 };

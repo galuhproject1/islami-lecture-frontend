@@ -14,6 +14,9 @@ import Register from "./routes/auth/register/index.tsx";
 import UploadPage from "./routes/auth/upload/index.tsx";
 import SurveyPage from "./routes/auth/survey/index.tsx";
 import CourseDetail from "./routes/course/[id].tsx";
+import CheckoutPage from "./routes/checkout/index.tsx";
+import { ThemeProvider } from "@mui/material";
+import theme from "./theme.tsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +48,14 @@ const router = createBrowserRouter([
     element: (
       <MainLayout>
         <CourseDetail />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/checkout",
+    element: (
+      <MainLayout>
+        <CheckoutPage />
       </MainLayout>
     ),
   },
@@ -91,11 +102,13 @@ const router = createBrowserRouter([
         <Explore />
       </MainLayout>
     ),
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
