@@ -2,9 +2,9 @@ import { ArticleData } from "../../libs/Data/ArticlesData";
 
 const BlogCard = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 md:justify-between font-inter gap-8">
+    <div className="font-inter flex justify-center items-center gap-8 flex-wrap">
       {ArticleData.map((item, index) => (
-        <div className="w-[410px] h-[522px] rounded-xl shadow-md space-y-4 cursor-pointer" key={index}>
+        <div className="w-[300px] md:w-[320px] lg:w-[380px] h-[480px] rounded-xl shadow-md space-y-4 cursor-pointer bg-white" key={index}>
           <img src={item.image} alt="blog" className="rounded-t-xl" />
           <div className="flex justify-center items-center p-4">
             <div className="bg-[#FFBA07] text-white py-2 px-4 rounded-md">

@@ -47,7 +47,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="font-inter text-[18px] py-2 border-b border-[#E5E5E5] w-full bg-white">
+    <div className="font-inter text-[18px] py-2 border-b border-[#E5E5E5] w-full bg-white px-4">
       <div
         className={`${
           pathname.includes("dashboard") ? "px-8" : "container mx-auto px-auto"
@@ -66,7 +66,7 @@ const Navbar = () => {
         {/* Menu untuk tampilan mobile */}
         <div className="md:hidden flex items-center">
           <button className="text-[24px] p-2" onClick={toggleMobileMenu}>
-            {showMobileMenu ? <IoCloseSharp /> : <GiHamburgerMenu />}
+            {showMobileMenu ? <IoCloseSharp className="z-50" /> : <GiHamburgerMenu />}
           </button>
         </div>
 
@@ -112,7 +112,7 @@ const Navbar = () => {
         )}
 
         {/* Menu utama untuk tampilan desktop */}
-        <ul className="hidden md:flex md:items-center md:gap-8">
+        <ul className="hidden lg:flex md:items-center md:gap-8">
           {url.map((item) => (
             <li
               key={item.name}

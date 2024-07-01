@@ -16,9 +16,9 @@ const ContactSection = () => {
         <input
           type="text"
           placeholder="Enter Your Email address"
-          className="md:w-[533px] w-[400px] h-[56px] rounded-full border-[#14142B0F] border-[1px] p-4"
+          className="w-full md:w-[533px] lg:w-[600px] w-[400px] h-[56px] rounded-full border-[#14142B0F] border-[1px] p-4"
         />
-        <button className="absolute right-0 bg-[#EF2F88] text-white h-[56px] px-8 rounded-full font-bold text-[16px]">
+        <button className="relative mt-4 md:mt-0 md:absolute right-0 bg-[#EF2F88] text-white h-[56px] px-8 rounded-full font-bold text-[16px]">
           Get Started
         </button>
       </div>

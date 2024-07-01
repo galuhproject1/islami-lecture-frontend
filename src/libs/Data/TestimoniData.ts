@@ -10,6 +10,13 @@ export const TestimoniData: TestimoniType[] = [
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
+        id: 2,
+        name: "Andi",
+        image: AdobeStock,
+        position: "Marketing Specialist",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    {
         id: 3,
         name: "Andi",
         image: AdobeStock,

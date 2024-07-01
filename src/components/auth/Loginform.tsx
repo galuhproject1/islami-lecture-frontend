@@ -29,11 +29,22 @@ const Loginform = () => {
 
     localStorage.setItem("userData", JSON.stringify(data));
     alert(`Logged in as ${role}`);
+
+    setTimeout(() => {
+      localStorage.removeItem("userData");
+    }, 1000 * 60);
   };
 
   const userData = localStorage.getItem("userData");
   const role = userData ? JSON.parse(userData).role : null;
   console.log(role);
+
+  //move code to nav or main layout
+  // useEffect(() => {
+  //   if (!userData) {
+  //     navigate("/");
+  //   }
+  // }, [userData, navigate]);
 
   return (
     <Box
