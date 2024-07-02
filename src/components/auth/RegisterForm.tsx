@@ -23,7 +23,7 @@ const RegisterForm = () => {
           color: "#1F2F54",
         }}
       >
-        Sign in
+        New Account
       </Typography>
       <Typography sx={{ marginBottom: 2, color: "#6E7991" }}>Lengkapi form di bawah dengan menggunakan data Anda yang valid</Typography>
       <Box sx={{ marginBottom: 2 }}>

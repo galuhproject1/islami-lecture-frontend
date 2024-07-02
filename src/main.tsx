@@ -17,6 +17,9 @@ import CourseDetail from "./routes/course/[id].tsx";
 import CheckoutPage from "./routes/checkout/index.tsx";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme.tsx";
+import ClassPage from "./routes/dashboard/class/index.tsx";
+import TransactionPage from "./routes/dashboard/transaction/index.tsx";
+import SettingPage from "./routes/dashboard/setting/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +106,30 @@ const router = createBrowserRouter([
       </MainLayout>
     ),
   },
+  {
+    path: "/dashboard/class",
+    element: (
+      <MainLayout>
+        <ClassPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/transaction",
+    element: (
+      <MainLayout>
+        <TransactionPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/setting",
+    element: (
+      <MainLayout>
+        <SettingPage />
+      </MainLayout>
+    ),
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

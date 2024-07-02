@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import { CiBellOn, CiHeart } from "react-icons/ci";
@@ -46,17 +46,25 @@ const Navbar = () => {
     setShowMobileMenu(!showMobileMenu);
   };
 
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [pathname]);
+
   return (
     <div className="font-inter text-[18px] py-2 border-b border-[#E5E5E5] w-full bg-white px-4">
       <div
         className={`${
-          pathname.includes("dashboard") ? "px-8" : "container mx-auto px-auto"
+          pathname.includes("dashboard") ? "px-4" : "container mx-auto px-auto"
         } flex items-center justify-between`}
       >
         <div className="text-primary flex items-center gap-2">
-          <img src={Logo} alt="logo" />
+          <img
+            src={Logo}
+            alt="logo"
+            className="w-[24px] h-[24px] md:w-[32px] md:h-[32px] lg:w-[40px] lg:h-[40px]"
+          />
           <p
-            className="text-[24px] font-bold cursor-pointer"
+            className="text-[20px] md:text-[24px] font-bold cursor-pointer"
             onClick={() => navigate("/")}
           >
             IslamicLecture
@@ -66,13 +74,23 @@ const Navbar = () => {
         {/* Menu untuk tampilan mobile */}
         <div className="md:hidden flex items-center">
           <button className="text-[24px] p-2" onClick={toggleMobileMenu}>
-            {showMobileMenu ? <IoCloseSharp className="z-50" /> : <GiHamburgerMenu />}
+            {!showMobileMenu && <GiHamburgerMenu />}
           </button>
         </div>
 
         {/* Overlay untuk menu mobile */}
         {showMobileMenu && (
           <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50 flex flex-col items-center justify-center">
+            <div className="flex items-center justify-end w-full p-4 gap-4 absolute top-0 right-4">
+              <CiHeart size={24} />
+              <CiBellOn size={24} />
+              <button
+                className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary"
+                onClick={toggleMobileMenu}
+              >
+                <IoCloseSharp />
+              </button>
+            </div>
             <ul className="flex flex-col items-center gap-4 text-white">
               {url.map((item) => (
                 <li
@@ -86,16 +104,15 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <div className="flex items-center gap-8 cursor-pointer mt-8">
-              <CiHeart size={24} />
-              <CiBellOn size={24} />
-              <button
-                className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary"
-                onClick={toggleMobileMenu}
-              >
-                Close
-              </button>
-            </div>
+            <button
+              className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary mt-4 md:hidden"
+              onClick={() => {
+                setShowLogin(true);
+                toggleMobileMenu();
+              }}
+            >
+              Masuk/Daftar
+            </button>
           </div>
         )}
 

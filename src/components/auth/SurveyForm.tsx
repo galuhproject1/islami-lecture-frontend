@@ -103,7 +103,11 @@ const SurveyForm = () => {
           fontWeight: 400,
           color: "#6E7991",
           fontFamily: "Mulish",
-          width: "60%",
+          width: {
+            xs: "100%",
+            sm: "100%",
+            md: "60%",
+          },
         }}
       >
         Informasi Anda sangat berarti bagi kami untuk memberikan pelayanan yang
