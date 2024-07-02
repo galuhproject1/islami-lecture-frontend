@@ -129,7 +129,15 @@ const router = createBrowserRouter([
         <SettingPage />
       </MainLayout>
     ),
-  }
+  },
+  // {
+  //   path: "/dashboard/setting/profile",
+  //   element: (
+  //     <MainLayout>
+  //       <SettingPage />
+  //     </MainLayout>
+  //   ),
+  // }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
