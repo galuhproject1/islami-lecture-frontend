@@ -7,9 +7,10 @@ type Props = {
   type?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
+  helperText?: string;
 };
 
-const CustomInput = ({ placeholder, type, onChange, value }: Props) => {
+const CustomInput = ({ placeholder, type, onChange, value, helperText }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -30,6 +31,7 @@ const CustomInput = ({ placeholder, type, onChange, value }: Props) => {
       value={value}
       name={"new-" + type}
       autoComplete="off"
+      helperText={helperText}
       InputProps={{
         endAdornment: type === "password" && (
           <InputAdornment position="end">

@@ -64,7 +64,7 @@ const Sidebar = () => {
     },
     {
       name: "Pengaturan",
-      url: "/dashboard/setting",
+      url: "/dashboard/setting/edit-profile",
       icon: (
         <CiSettings
           size={28}
@@ -81,7 +81,7 @@ const Sidebar = () => {
         <div
           key={item.name}
           className={`cursor-pointer text-primary flex items-center gap-4 hover:text-white hover:bg-[#FF4363] hover:rounded-md p-4 ${
-            pathname === item.url && "bg-[#FF4363] rounded-md text-white"
+            pathname === item.url || pathname.includes(item.url.split("/")[2]) ? "bg-[#FF4363] rounded-md text-white" : ""
           }`}
           onClick={() => navigate(item.url)}
         >

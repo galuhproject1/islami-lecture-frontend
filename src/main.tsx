@@ -19,7 +19,12 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./theme.tsx";
 import ClassPage from "./routes/dashboard/class/index.tsx";
 import TransactionPage from "./routes/dashboard/transaction/index.tsx";
-import SettingPage from "./routes/dashboard/setting/index.tsx";
+import AccountSetting from "./routes/dashboard/setting/account/index.tsx";
+import ProfileSetting from "./routes/dashboard/setting/profile/index.tsx";
+import NotificationSetting from "./routes/dashboard/setting/notification/index.tsx";
+import PaymentMethodSetting from "./routes/dashboard/setting/payment-method/index.tsx";
+import PrivacyPolicy from "./routes/dashboard/setting/privacypolicy/index.tsx";
+import Logout from "./routes/dashboard/setting/logout/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -123,21 +128,53 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/dashboard/setting",
+    path: "/dashboard/setting/edit-profile",
     element: (
       <MainLayout>
-        <SettingPage />
+        <ProfileSetting />
       </MainLayout>
     ),
   },
-  // {
-  //   path: "/dashboard/setting/profile",
-  //   element: (
-  //     <MainLayout>
-  //       <SettingPage />
-  //     </MainLayout>
-  //   ),
-  // }
+  {
+    path: "/dashboard/setting/account-settings",
+    element: (
+      <MainLayout>
+        <AccountSetting />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/setting/notification",
+    element: (
+      <MainLayout>
+        <NotificationSetting />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/setting/payment-method",
+    element: (
+      <MainLayout>
+        <PaymentMethodSetting />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/setting/privacy-policy",
+    element: (
+      <MainLayout>
+        <PrivacyPolicy />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/setting/logout",
+    element: (
+      <MainLayout>
+        <Logout />
+      </MainLayout>
+    ),
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

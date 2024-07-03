@@ -1,5 +1,11 @@
-const settingPaymentMethod = () => {
-    return <div>settingPaymentMethod</div>;
+import SettingPage from "..";
+
+const PaymentMethodSetting = () => {
+    return (
+        <SettingPage>
+            <div>PaymentMethodSetting</div>
+        </SettingPage>
+    );
 };
 
-export default settingPaymentMethod;
+export default PaymentMethodSetting;

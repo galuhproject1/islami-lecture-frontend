@@ -1,5 +1,11 @@
-const privacyPolicy = () => {
-    return <div>privacyPolicy</div>;
+import SettingPage from "..";
+
+const PrivacyPolicy = () => {
+    return (
+        <SettingPage>
+            <div>privacyPolicy</div>
+        </SettingPage>
+    );
 };
 
-export default privacyPolicy;
+export default PrivacyPolicy;
