@@ -1,6 +1,7 @@
 import { Box, Tabs, Tab } from "@mui/material";
 import { useState } from "react";
 import TabOne from "./Tabs/TabOne";
+import TabTwo from "./Tabs/TabTwo";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -23,8 +24,11 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-const TabsCourse = () => {
-  const [value, setValue] = useState(1);
+type Props = {
+  inClass: boolean;
+};
+const TabsCourse = ({ inClass }: Props) => {
+  const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -60,17 +64,57 @@ const TabsCourse = () => {
             },
           }}
         >
-          <Tab label="Overview" {...a11yProps(0)} />
-          <Tab label="Modul Pembelajaran" {...a11yProps(1)} />
-          <Tab label="QnA" {...a11yProps(2)} />
-          <Tab label="Information" {...a11yProps(3)} />
+          <Tab
+            label="Overview"
+            sx={{
+              textTransform: "capitalize",
+              fontSize: "18px",
+              "&.Mui-selected": {
+                fontWeight: 700,
+              },
+            }}
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="Modul Pembelajaran"
+            sx={{
+              textTransform: "capitalize",
+              fontSize: "18px",
+              "&.Mui-selected": {
+                fontWeight: 700,
+              },
+            }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label={inClass ? "Tools" : "QnA"}
+            sx={{
+              textTransform: "capitalize",
+              fontSize: "18px",
+              "&.Mui-selected": {
+                fontWeight: 700,
+              },
+            }}
+            {...a11yProps(2)}
+          />
+          <Tab
+            label={inClass ? "Ulasan" : "Information"}
+            sx={{
+              textTransform: "capitalize",
+              fontSize: "18px",
+              "&.Mui-selected": {
+                fontWeight: 700,
+              },
+            }}
+            {...a11yProps(3)}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
         <TabOne />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <TabOne />
+        <TabTwo />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <TabOne />

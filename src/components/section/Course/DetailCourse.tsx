@@ -27,7 +27,7 @@ const DetailCourse = () => {
         }}
       >
         <VideoCourse />
-        <TabsCourse />
+        <TabsCourse inClass={false} />
         <Box sx={{ backgroundColor: "white", padding: 4, borderRadius: "8px" }}>
           <Typography
             sx={{ fontWeight: 700, fontSize: "24px", color: "primary", my: 2 }}

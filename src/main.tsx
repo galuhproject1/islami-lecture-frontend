@@ -25,6 +25,7 @@ import NotificationSetting from "./routes/dashboard/setting/notification/index.t
 import PaymentMethodSetting from "./routes/dashboard/setting/payment-method/index.tsx";
 import PrivacyPolicy from "./routes/dashboard/setting/privacypolicy/index.tsx";
 import Logout from "./routes/dashboard/setting/logout/index.tsx";
+import DetailClassPage from "./routes/dashboard/class/[id].tsx";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,14 @@ const router = createBrowserRouter([
     element: (
       <MainLayout>
         <ClassPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/class/:id",
+    element: (
+      <MainLayout>
+        <DetailClassPage />
       </MainLayout>
     ),
   },

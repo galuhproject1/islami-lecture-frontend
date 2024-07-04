@@ -1,4 +1,5 @@
 import { LinearProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 type ProgressData = {
   id: string;
@@ -7,6 +8,7 @@ type ProgressData = {
   progress: number;
 };
 const ProgressCourse = () => {
+  const navigate = useNavigate();
   const progressData: ProgressData[] = [
     {
       id: "1",
@@ -20,6 +22,12 @@ const ProgressCourse = () => {
       lastLesson: "20. Object-oriented Programming on Dart",
       progress: 20,
     },
+    {
+      id: "3",
+      title: "Flutter Development",
+      lastLesson: "10. Object-oriented Programming on Dart",
+      progress: 30,
+    }
   ];
 
   return (
@@ -44,7 +52,7 @@ const ProgressCourse = () => {
               />
             </div>
           </div>
-          <button className="bg-[#3D60DE] text-white px-4 py-2 rounded-lg">
+          <button className="bg-[#3D60DE] text-white px-4 py-2 rounded-lg" onClick={() => navigate(`/dashboard/class/${item.id}`)}>
             Resume
           </button>
         </div>
