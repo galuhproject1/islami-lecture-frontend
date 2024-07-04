@@ -5,6 +5,7 @@ import { CiBellOn, CiHeart } from "react-icons/ci";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import MainCard from "../auth/MainCard";
+import PopperNotification from "../reusable/PopperNotification";
 
 type url = {
   name: string;
@@ -18,6 +19,19 @@ const Navbar = () => {
 
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const [showLogin, setShowLogin] = useState<boolean>(false);
+
+  // popper
+  const [openPopper, setOpenPopper] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  
+
+  const handleClickPopper = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setOpenPopper((previousOpen) => !previousOpen);
+  };
+
+  const canBeOpen = openPopper && Boolean(anchorEl);
+  const id = canBeOpen ? "spring-popper" : undefined;
 
   const url: url[] = [
     {
@@ -146,7 +160,9 @@ const Navbar = () => {
         {/* Menu ikon pada kanan untuk tampilan desktop */}
         <div className="hidden md:flex items-center gap-8 cursor-pointer">
           <CiHeart size={24} />
-          <CiBellOn size={24} />
+          <button onClick={handleClickPopper}>
+            <CiBellOn size={24} />
+          </button>
           <button
             className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary"
             onClick={() => setShowLogin(true)}
@@ -155,6 +171,7 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+      <PopperNotification id={id} openPopper={openPopper} anchorEl={anchorEl} />
     </div>
   );
 };

@@ -10,7 +10,7 @@ const BlogSection = () => {
             Baca artikel dari kami
           </p>
         </div>
-        <button className="hidden md:block bg-white border border-[#EBEEF3] text-primary py-4 px-8 rounded-xl text-[18px] h-[80px]">
+        <button className="hidden md:block bg-white border border-[#EBEEF3] text-primary py-4 px-4 rounded-xl text-[18px] h-[72px] w-[300px]">
           Browse all articles
         </button>
       </div>

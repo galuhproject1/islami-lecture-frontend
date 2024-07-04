@@ -1,24 +1,116 @@
-import { Modal } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
+import { AiFillInfoCircle } from "react-icons/ai";
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  title: string;
+  desc: string;
 };
 
 const style = {
   position: "absolute",
-  top: "50%",
-  left: "50%",
-  width: "auto",
-  bgcolor: "transparent",
+  top: "30%",
+  left: "40%",
+  width: "375px",
+  bgcolor: "white",
   boxShadow: 24,
   p: 4,
+  borderRadius: "8px",
 };
 
-const ModalAction = ({ open, onClose }: Props) => {
+const ModalAction = ({ open, onClose, title, desc }: Props) => {
   return (
-    <Modal open={open} onClose={onClose} sx={{ style }}>
-      <div className="w-1/3 text-center p-4 rounded-md bg-white">delete</div>
+    <Modal open={open} onClose={onClose}>
+      <Box sx={style}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "64px",
+              height: "64px",
+              borderRadius: "50%",
+              backgroundColor: "#DB5962",
+            }}
+          >
+            <AiFillInfoCircle
+              size={48}
+              color="white"
+              className="p-1 transform scale-y-[-1]"
+            />
+          </Box>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: "18px",
+              color: "primary",
+              fontFamily: "Inter",
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "14px",
+              color: "text.secondary",
+              fontFamily: "Inter",
+              width: "80%",
+              textAlign: "center",
+            }}
+          >
+            {desc}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "90%",
+            }}
+          >
+            <Button
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                fontFamily: "Inter",
+                fontWeight: 700,
+                fontSize: "16px",
+                px: 4,
+                py: 1,
+                borderRadius: "8px",
+              }}
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#3D60DE",
+                textTransform: "none",
+                fontFamily: "Inter",
+                fontWeight: 700,
+                fontSize: "16px",
+                px: 4,
+                py: 1,
+                borderRadius: "8px",
+              }}
+              onClick={onClose}
+            >
+              {title.includes("Delete") ? "Delete" : "Logout"}
+            </Button>
+          </Box>
+        </Box>
+      </Box>
     </Modal>
   );
 };

@@ -24,11 +24,13 @@ const VideoCourse = () => {
       </Box>
       <Typography
         sx={{
-          marginTop: "12px",
+          marginTop: "14px",
           fontWeight: 700,
-          fontSize: "40px",
+          fontSize: "38px",
           color: "#1F2F54",
           width: "60%",
+          lineHeight: "46.8px",
+          letterSpacing: "-0.02em",
         }}
       >
         {" "}

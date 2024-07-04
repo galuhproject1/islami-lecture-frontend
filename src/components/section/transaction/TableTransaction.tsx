@@ -4,7 +4,6 @@ import {
   Chip,
   IconButton,
   InputAdornment,
-  Popover,
   Table,
   TableBody,
   TableCell,
@@ -20,21 +19,20 @@ import { TransactionData } from "../../../libs/Data/TransactionsData";
 import { priceFormat } from "../../../utils/priceFormat";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
+import PopperAction from "../../reusable/PopperAction";
 
 const TableTransaction = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [openPopper, setOpenPopper] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  
 
-  const handleClickPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickPopper = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    setOpenPopper((previousOpen) => !previousOpen);
   };
 
-  const handleClosePopover = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-  console.log(open);
+  const canBeOpen = openPopper && Boolean(anchorEl);
+  const id = canBeOpen ? "spring-popper" : undefined;
 
   const styleTH = {
     fontWeight: 700,
@@ -135,7 +133,7 @@ const TableTransaction = () => {
                   />
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton onClick={handleClickPopover}>
+                  <IconButton onClick={handleClickPopper}>
                     <BsThreeDotsVertical size={24} />
                   </IconButton>
                 </TableCell>
@@ -154,20 +152,7 @@ const TableTransaction = () => {
           sx={{ fontFamily: "Mulish", backgroundColor: "white" }}
         />
       </Box>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClosePopover}
-        anchorPosition={{ top: 0, left: -100 }}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        sx={{ boxShadow: "none", border: "1px solid #7340E5" }}
-      >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-      </Popover>
+      <PopperAction id={id} openPopper={openPopper} anchorEl={anchorEl} />
     </Box>
   );
 };
