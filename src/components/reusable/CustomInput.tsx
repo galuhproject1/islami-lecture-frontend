@@ -32,6 +32,8 @@ const CustomInput = ({ placeholder, type, onChange, value, helperText }: Props) 
       name={"new-" + type}
       autoComplete="off"
       helperText={helperText}
+      multiline={type == "textarea" ? true : false}
+      rows={4}
       InputProps={{
         endAdornment: type === "password" && (
           <InputAdornment position="end">

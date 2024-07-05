@@ -11,6 +11,7 @@ type Props = {
 const MainLayout = ({ children }: Props) => {
   const location = useLocation();
   const pathname = location.pathname;
+  
 
   const [isMobile, setIsMobile] = useState(false);
 

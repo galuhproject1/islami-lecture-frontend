@@ -1,11 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import LoadingScreen from "../../../../components/reusable/LoadingScreen";
 
 const Logout = () => {
-    // remove token and navigate to home
-    useEffect(() => {
-        localStorage.removeItem("token");
-        window.location.href = "/";
-    }, []);
-    return null;
+  const [loading, setLoading] = useState<boolean>(false);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    }, 2000);
+  }, []);
+  return <>{loading ? <LoadingScreen /> : null}</>;
 };
 export default Logout;

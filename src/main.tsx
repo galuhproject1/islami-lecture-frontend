@@ -26,6 +26,7 @@ import PaymentMethodSetting from "./routes/dashboard/setting/payment-method/inde
 import PrivacyPolicy from "./routes/dashboard/setting/privacypolicy/index.tsx";
 import Logout from "./routes/dashboard/setting/logout/index.tsx";
 import DetailClassPage from "./routes/dashboard/class/[id].tsx";
+import CreateClassPage from "./routes/dashboard/class/create.tsx";
 
 const router = createBrowserRouter([
   {
@@ -125,6 +126,14 @@ const router = createBrowserRouter([
     element: (
       <MainLayout>
         <DetailClassPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/dashboard/class/create",
+    element: (
+      <MainLayout>
+        <CreateClassPage />
       </MainLayout>
     ),
   },

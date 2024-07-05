@@ -32,7 +32,7 @@ const Loginform = () => {
 
     setTimeout(() => {
       localStorage.removeItem("userData");
-    }, 1000 * 60);
+    }, 1000 * 60 * 30);
   };
 
   const userData = localStorage.getItem("userData");
