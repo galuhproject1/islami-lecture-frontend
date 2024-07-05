@@ -48,7 +48,7 @@ const MainLayout = ({ children }: Props) => {
               </div>
               <div
                 className={`${
-                  pathname.includes("dashboard") ? "p-8  w-full" : "p-0 container mx-auto px-auto"
+                  pathname.includes("dashboard") ? "p-8 w-full" : "p-0 container mx-auto px-auto"
                 }`}
               >
                 {children}

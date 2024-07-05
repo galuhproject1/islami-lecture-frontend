@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import MainCard from "../auth/MainCard";
 import PopperNotification from "../reusable/PopperNotification";
+import { Modal } from "@mui/material";
 
 type url = {
   name: string;
@@ -19,11 +20,12 @@ const Navbar = () => {
 
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const [showLogin, setShowLogin] = useState<boolean>(false);
+  console.log(showLogin);
+  const handleClose = () => setShowLogin(false);
 
   // popper
   const [openPopper, setOpenPopper] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  
 
   const handleClickPopper = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -130,18 +132,6 @@ const Navbar = () => {
           </div>
         )}
 
-        {showLogin && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50 flex flex-col items-center justify-center"
-            onClick={() => setShowLogin(false)}
-            onDoubleClick={() => setShowLogin(false)}
-          >
-            <div onClick={(e) => e.stopPropagation()}>
-              <MainCard type="login" />
-            </div>
-          </div>
-        )}
-
         {/* Menu utama untuk tampilan desktop */}
         <ul className="hidden lg:flex md:items-center md:gap-8">
           {url.map((item) => (
@@ -171,6 +161,9 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+      <Modal open={showLogin} onClose={handleClose}>
+        <MainCard type="login" onCloseModal={handleClose} />
+      </Modal>
       <PopperNotification id={id} openPopper={openPopper} anchorEl={anchorEl} />
     </div>
   );
