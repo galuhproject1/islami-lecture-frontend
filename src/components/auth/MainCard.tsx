@@ -1,3 +1,4 @@
+import React, { forwardRef } from "react";
 import Ilustration from "../../assets/images/ilustration/ilustration1.svg";
 import Loginform from "./Loginform";
 import RegisterForm from "./RegisterForm";
@@ -9,7 +10,7 @@ type Props = {
   onCloseModal?: () => void;
 };
 
-const MainCard = ({ type, onCloseModal }: Props) => {
+const MainCard = forwardRef<HTMLDivElement, Props>(({ type, onCloseModal }, ref) => {
   const handleBackgroundClick = () => {
     if (onCloseModal) {
       onCloseModal();
@@ -21,7 +22,7 @@ const MainCard = ({ type, onCloseModal }: Props) => {
   };
 
   return (
-    <div className="container mx-auto px-auto" onClick={handleBackgroundClick}>
+    <div className="container mx-auto px-auto" onClick={handleBackgroundClick} ref={ref}>
       <div className="h-screen flex items-center justify-center font-inter">
         <div
           className="w-full md:w-4/5 lg:w-3/5 h-md rounded-3xl flex bg-white shadow-2xl"
@@ -57,6 +58,6 @@ const MainCard = ({ type, onCloseModal }: Props) => {
       </div>
     </div>
   );
-};
+});
 
 export default MainCard;

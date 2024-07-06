@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Divider, Typography } from "@mui/material";
 import CustomInput from "../reusable/CustomInput";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -6,45 +6,57 @@ import { useState } from "react";
 const Loginform = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handleLogin = () => {
-    let role = "";
-
-    if (email === "user@gmail.com") {
-      role = "user";
-    } else if (email === "mentor@gmail.com") {
-      role = "mentor";
-    } else {
-      role = "unknown";
+  const handleLogin = async () => {
+    setLoading(true);
+  
+    try {
+      // Simulate async login check
+      setTimeout(() => {
+        let role = "";
+  
+        if (email === "user@gmail.com") {
+          role = "user";
+        } else if (email === "mentor@gmail.com") {
+          role = "mentor";
+        } else {
+          throw new Error("Email tidak terdaftar.");
+        }
+  
+        const data = {
+          email: email,
+          role: role,
+        };
+  
+        localStorage.setItem("userData", JSON.stringify(data));
+  
+        // Move setLoading(false) here
+        setLoading(false);
+        navigate("/dashboard");
+  
+      }, 2000);
+  
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("Login gagal. Silakan coba lagi.");
+      setLoading(false);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
-
-    const data = {
-      email: email,
-      role: role,
-    };
-
-    localStorage.setItem("userData", JSON.stringify(data));
-    alert(`Logged in as ${role}`);
-
-    setTimeout(() => {
-      localStorage.removeItem("userData");
-    }, 1000 * 60 * 30);
   };
+  
+  
 
   const userData = localStorage.getItem("userData");
   const role = userData ? JSON.parse(userData).role : null;
   console.log(role);
-
-  //move code to nav or main layout
-  // useEffect(() => {
-  //   if (!userData) {
-  //     navigate("/");
-  //   }
-  // }, [userData, navigate]);
 
   return (
     <Box
@@ -135,7 +147,7 @@ const Loginform = () => {
           }}
           onClick={handleLogin}
         >
-          Signin
+          {loading ? <CircularProgress size={24} sx={{ color: "#FFFFFF" }} /> : "Signin" }
         </Button>
         <Button
           variant="contained"

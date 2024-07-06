@@ -7,7 +7,7 @@ const Logout = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      localStorage.removeItem("token");
+      localStorage.removeItem("userData");
       window.location.href = "/";
     }, 2000);
   }, []);

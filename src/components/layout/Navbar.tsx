@@ -7,6 +7,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import MainCard from "../auth/MainCard";
 import PopperNotification from "../reusable/PopperNotification";
 import { Modal } from "@mui/material";
+import Profile from "../../assets/images/adobe-stock1.png";
 
 type url = {
   name: string;
@@ -20,7 +21,6 @@ const Navbar = () => {
 
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const [showLogin, setShowLogin] = useState<boolean>(false);
-  console.log(showLogin);
   const handleClose = () => setShowLogin(false);
 
   // popper
@@ -65,6 +65,14 @@ const Navbar = () => {
   useEffect(() => {
     setShowMobileMenu(false);
   }, [pathname]);
+
+  const user = localStorage.getItem("userData") || "{}";
+
+  useEffect(() => {
+    if (user !== "{}") {
+      setShowLogin(false);
+    }
+  }, [user]);
 
   return (
     <div className="font-inter text-[18px] py-2 border-b border-[#E5E5E5] w-full bg-white px-4">
@@ -153,16 +161,32 @@ const Navbar = () => {
           <button onClick={handleClickPopper}>
             <CiBellOn size={24} />
           </button>
-          <button
-            className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary"
-            onClick={() => setShowLogin(true)}
-          >
-            Masuk/Daftar
-          </button>
+          {user !== "{}" ? (
+            <div className="flex items-center gap-4">
+            <img
+              src={Profile}
+              alt="profile"
+              className="w-[24px] h-[24px] md:w-[32px] md:h-[32px] lg:w-[40px] lg:h-[40px] rounded-full"
+            />
+            <div>
+              <p className="text-[16px] font-bold">Insan Cendekia</p>
+              <p className="text-[12px] text-[#9A9AB0]">Admin@gmail.com</p>
+            </div>
+            </div>
+          ) : (
+            <button
+              className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary"
+              onClick={() => setShowLogin(true)}
+            >
+              Masuk/Daftar
+            </button>
+          )}
         </div>
       </div>
       <Modal open={showLogin} onClose={handleClose}>
+        <div tabIndex={-1}>
         <MainCard type="login" onCloseModal={handleClose} />
+        </div>
       </Modal>
       <PopperNotification id={id} openPopper={openPopper} anchorEl={anchorEl} />
     </div>

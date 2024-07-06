@@ -41,6 +41,7 @@ const SideMenuSetting = () => {
         </h1>
         {menus.map((menu) => (
           <div
+            key={menu.name}
             className="flex flex-col items-start gap-2 p-2 cursor-pointer"
             onClick={() => {
               if (menu.url === "/logout") {
