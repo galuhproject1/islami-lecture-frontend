@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import ProgressCourse from "../../../reusable/ProgressCourse";
 import ActivityProgress from "../ActivityProgress";
 import CardResume from "./CardResume";
 import TableStudents from "./TableStudents";
 
 const Tutor = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="flex w-full justify-between mb-8">
@@ -11,7 +13,7 @@ const Tutor = () => {
           <CardResume />
         </div>
         <div className="w-[20%]">
-          <button className="bg-[#3D60DE] text-white py-4 px-8 rounded-xl font-bold">
+          <button className="bg-[#3D60DE] text-white py-4 px-8 rounded-xl font-bold" onClick={() => navigate("/dashboard/class/create")}>
             Tambah Pelatihan
           </button>
         </div>
