@@ -1,13 +1,23 @@
-import { Box, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 type Student = {
-    id: number;
-    name: string;
-    type: string;
-    price: number;
-    date: string;
-    email: string;
-    status: string;
+  id: number;
+  name: string;
+  type: string;
+  price: number;
+  date: string;
+  email: string;
+  status: string;
 };
 const TableStudents = () => {
   const students: Student[] = [];
@@ -59,9 +69,9 @@ const TableStudents = () => {
               <TableCell align="center">{data.email}</TableCell>
               <TableCell align="center">{data.status}</TableCell>
               <TableCell align="center">
-                <button className="bg-[#3D60DE] text-white py-4 px-8 rounded-xl font-bold">
-                  Lihat Profil
-                </button>
+                <IconButton>
+                  <BsThreeDotsVertical size={24} />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

@@ -24,7 +24,6 @@ import PopperAction from "../../reusable/PopperAction";
 const TableTransaction = () => {
   const [openPopper, setOpenPopper] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  
 
   const handleClickPopper = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -128,8 +127,18 @@ const TableTransaction = () => {
                 <TableCell align="center">
                   <Chip
                     label={data.status}
-                    color={data.status === "Active" ? "success" : "error"}
-                    sx={{ borderRadius: "4px" }}
+                    // color={data.status === "Active" ? "success" : "error"}
+                    sx={{
+                      borderRadius: "4px",
+                      backgroundColor:
+                        data.status === "Active" ? "#DFF0D8" : "#F2DEDE",
+                      border:
+                        data.status === "Active"
+                          ? "1px solid #28A845"
+                          : "1px solid #D32F2F",
+                      color: data.status === "Active" ? "#28A845" : "#D32F2F",
+                      textTransform: "capitalize",
+                    }}
                   />
                 </TableCell>
                 <TableCell align="center">

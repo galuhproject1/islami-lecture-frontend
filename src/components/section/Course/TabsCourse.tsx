@@ -2,6 +2,7 @@ import { Box, Tabs, Tab } from "@mui/material";
 import { useState } from "react";
 import TabOne from "./Tabs/TabOne";
 import TabTwo from "./Tabs/TabTwo";
+import TabFour from "./Tabs/TabFour";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -120,7 +121,7 @@ const TabsCourse = ({ inClass }: Props) => {
         <TabOne />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <TabOne />
+        <TabFour label={inClass ? "Ulasan" : "Information"} />
       </CustomTabPanel>
     </Box>
   );

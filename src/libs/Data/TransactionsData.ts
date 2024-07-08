@@ -26,7 +26,7 @@ export const TransactionData: TransactionType[] = [
         type: "premium",
         price: 150000,
         purchaseDate: "2023-01-15",
-        status: "active"
+        status: "Active"
       },
       {
         id: "4",
@@ -44,7 +44,7 @@ export const TransactionData: TransactionType[] = [
         type: "premium",
         price: 200000,
         purchaseDate: "2023-03-20",
-        status: "active"
+        status: "Active"
       },
       {
         id: "6",
@@ -62,7 +62,7 @@ export const TransactionData: TransactionType[] = [
         type: "premium",
         price: 50000,
         purchaseDate: "2023-05-12",
-        status: "active"
+        status: "Active"
       },
       {
         id: "8",
@@ -80,7 +80,7 @@ export const TransactionData: TransactionType[] = [
         type: "premium",
         price: 120000,
         purchaseDate: "2023-07-22",
-        status: "active"
+        status: "Active"
       },
       {
         id: "10",
@@ -98,7 +98,7 @@ export const TransactionData: TransactionType[] = [
         type: "premium",
         price: 170000,
         purchaseDate: "2023-09-05",
-        status: "active"
+        status: "Active"
       },
       {
         id: "12",
