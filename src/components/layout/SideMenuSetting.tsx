@@ -65,10 +65,13 @@ const SideMenuSetting = () => {
         open={openModal}
         onClose={() => {
           setOpenModal(false);
-          navigate("/dashboard/setting/logout");
         }}
         title="Logout"
         desc="Are you sure you want to logout?"
+        onSubmit={() => {
+          setOpenModal(false);
+          navigate("/dashboard/setting/logout");
+        }}
       />
     </div>
   );

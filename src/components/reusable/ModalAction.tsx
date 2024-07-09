@@ -6,6 +6,7 @@ type Props = {
   onClose: () => void;
   title: string;
   desc: string;
+  onSubmit?: () => void;
 };
 
 const style = {
@@ -17,9 +18,10 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: "8px",
+  outline: "none",
 };
 
-const ModalAction = ({ open, onClose, title, desc }: Props) => {
+const ModalAction = ({ open, onClose, title, desc, onSubmit }: Props) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
@@ -103,8 +105,11 @@ const ModalAction = ({ open, onClose, title, desc }: Props) => {
                 px: 4,
                 py: 1,
                 borderRadius: "8px",
+                "&:hover": {
+                  backgroundColor: "#3D60DE",
+                },
               }}
-              onClick={onClose}
+              onClick={onSubmit}
             >
               {title.includes("Delete") ? "Delete" : "Logout"}
             </Button>

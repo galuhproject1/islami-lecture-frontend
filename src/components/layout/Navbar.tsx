@@ -8,6 +8,7 @@ import MainCard from "../auth/MainCard";
 import PopperNotification from "../reusable/PopperNotification";
 import { Modal } from "@mui/material";
 import Profile from "../../assets/images/adobe-stock1.png";
+import PopperProfile from "../reusable/PopperProfile";
 
 type url = {
   name: string;
@@ -23,8 +24,8 @@ const Navbar = () => {
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const handleClose = () => setShowLogin(false);
 
-  // popper
-  const [openPopper, setOpenPopper] = useState(false);
+  // popper notification
+  const [openPopper, setOpenPopper] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClickPopper = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,6 +35,20 @@ const Navbar = () => {
 
   const canBeOpen = openPopper && Boolean(anchorEl);
   const id = canBeOpen ? "spring-popper" : undefined;
+
+  // popper profile
+  const [openPopperProfile, setOpenPopperProfile] = useState<boolean>(false);
+  const [anchorElProfile, setAnchorElProfile] = useState<null | HTMLElement>(
+    null
+  );
+
+  const handleClickPopperProfile = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElProfile(event.currentTarget);
+    setOpenPopperProfile((previousOpen) => !previousOpen);
+  };
+
+  const canBeOpenProfile = openPopperProfile && Boolean(anchorElProfile);
+  const idProfile = canBeOpenProfile ? "spring-popper" : undefined;
 
   const url: url[] = [
     {
@@ -162,17 +177,20 @@ const Navbar = () => {
             <CiBellOn size={24} />
           </button>
           {user !== "{}" ? (
-            <div className="flex items-center gap-4">
-            <img
-              src={Profile}
-              alt="profile"
-              className="w-[24px] h-[24px] md:w-[32px] md:h-[32px] lg:w-[40px] lg:h-[40px] rounded-full"
-            />
-            <div>
-              <p className="text-[16px] font-bold">Insan Cendekia</p>
-              <p className="text-[12px] text-[#9A9AB0]">Admin@gmail.com</p>
-            </div>
-            </div>
+            <button
+              className="flex items-center gap-4 cursor-pointer"
+              onClick={handleClickPopperProfile}
+            >
+              <img
+                src={Profile}
+                alt="profile"
+                className="w-[24px] h-[24px] md:w-[32px] md:h-[32px] lg:w-[40px] lg:h-[40px] rounded-full"
+              />
+              <div>
+                <p className="text-[16px] font-bold">Insan Cendekia</p>
+                <p className="text-[12px] text-[#9A9AB0]">Admin@gmail.com</p>
+              </div>
+            </button>
           ) : (
             <button
               className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary"
@@ -185,10 +203,15 @@ const Navbar = () => {
       </div>
       <Modal open={showLogin} onClose={handleClose}>
         <div tabIndex={-1}>
-        <MainCard type="login" onCloseModal={handleClose} />
+          <MainCard type="login" onCloseModal={handleClose} />
         </div>
       </Modal>
       <PopperNotification id={id} openPopper={openPopper} anchorEl={anchorEl} />
+      <PopperProfile
+        id={idProfile}
+        openPopper={openPopperProfile}
+        anchorEl={anchorElProfile}
+      />
     </div>
   );
 };
