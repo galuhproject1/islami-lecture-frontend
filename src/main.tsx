@@ -27,6 +27,7 @@ import PrivacyPolicy from "./routes/dashboard/setting/privacypolicy/index.tsx";
 import Logout from "./routes/dashboard/setting/logout/index.tsx";
 import DetailClassPage from "./routes/dashboard/class/[id].tsx";
 import CreateClassPage from "./routes/dashboard/class/create.tsx";
+import ProtectedRoute from "./components/Protected/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -100,9 +101,11 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <MainLayout>
-        <Dashboard />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <Dashboard />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
@@ -192,7 +195,7 @@ const router = createBrowserRouter([
         <Logout />
       </MainLayout>
     ),
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

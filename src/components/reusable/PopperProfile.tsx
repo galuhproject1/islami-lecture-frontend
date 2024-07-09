@@ -19,6 +19,22 @@ const PopperProfile = ({ id, openPopper, anchorEl }: Props) => {
       placement="bottom-end"
     >
       <Paper sx={{ p: 1, borderRadius: "8px", width: "300px" }}>
+      <Button
+          variant="text"
+          sx={{
+            width: "100%",
+            color: "primary",
+            fontWeight: 700,
+            textTransform: "none",
+            fontSize: "16px",
+          }}
+          onClick={() => {
+            navigate("/dashboard");
+            anchorEl?.click();
+          }}
+        >
+          Dashboard
+        </Button>
         <Button
           variant="text"
           sx={{
