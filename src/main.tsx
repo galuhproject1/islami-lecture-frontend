@@ -28,6 +28,7 @@ import Logout from "./routes/dashboard/setting/logout/index.tsx";
 import DetailClassPage from "./routes/dashboard/class/[id].tsx";
 import CreateClassPage from "./routes/dashboard/class/create.tsx";
 import ProtectedRoute from "./components/Protected/ProtectedRoute.tsx";
+import { UserProvider } from "./context/UserProvider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -201,7 +202,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

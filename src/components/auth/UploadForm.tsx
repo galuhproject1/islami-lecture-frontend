@@ -1,24 +1,31 @@
 import { Box, Button, MenuItem, Select, SelectChangeEvent, TextField, Typography, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import UserContext from "../../context/UserProvider";
 
 const UploadForm = () => {
   const navigate = useNavigate();
+  const {user, registerUser} = useContext(UserContext) ?? {};
   const [fileName, setFileName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
-  const [target, setTarget] = useState("");
+  const [target, setTarget] = useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
       setFileName(files[0].name);
       setFilePreview(URL.createObjectURL(files[0]));
+
     }
   };
 
   const handleChangeTarget = (event: SelectChangeEvent) => {
     setTarget(event.target.value as string);
+
+    if (user && registerUser) {
+      registerUser({ ...user, target: event.target.value });
+    }
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -65,10 +72,10 @@ const UploadForm = () => {
           color: "#1F2F54",
         }}
       >
-        Agus Pujianto
+        {user?.fullname}
       </Typography>
       <Typography sx={{ marginBottom: 2, color: "#6E7991" }}>
-        aguspujianto@gmail.com
+        {user?.email}
       </Typography>
       <Box sx={{ marginBottom: 2, width: "100%" }}>
         <Typography

@@ -6,15 +6,60 @@ import {
   FormGroup,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserContext from "../../context/UserProvider";
 
 const SurveyForm = () => {
+  const { user, registerUser} = useContext(UserContext) ?? {};
   const platforms: string[] = ["Instagram", "Linkedin", "Facebook", "Youtube"];
 
   const [checkedPlatform, setCheckedPlatform] = useState("");
 
   const handleCheckboxChange = (platform: string) => {
     setCheckedPlatform(platform);
+
+    if (user && registerUser) {
+      registerUser({ ...user, source: platform });
+    }
+  };
+
+  const handleSubmit = async () => {
+    // Simulasi pengiriman data ke API
+    const data = {
+      fullname: user?.fullname,
+      email: user?.email,
+      password: user?.password,
+      fileName: user?.fileName,
+      target: user?.target,
+      source: user?.source,
+    };
+
+    try {
+      // Ganti URL_API dengan URL sesuai dengan endpoint API Anda
+      const response = await fetch("URL_API", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Gagal melakukan registrasi");
+      }
+
+      // Handle response jika diperlukan
+      const result = await response.json();
+      console.log("Response:", result);
+
+      // Navigasi ke halaman selanjutnya setelah berhasil registrasi
+      // navigate('/next-page');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error("Error:", error.message);
+      // Handle error jika diperlukan
+    }
   };
   return (
     <Box
@@ -93,6 +138,7 @@ const SurveyForm = () => {
             backgroundColor: "#FF4363",
           },
         }}
+        onClick={handleSubmit}
       >
         Selanjutnya
       </Button>
