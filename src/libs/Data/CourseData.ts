@@ -68,4 +68,15 @@ export const CourseData: CourseType[] = [
     tags: ["Mobile App", "Design", "Adobe XD"],
     review: "4.7 (687 reviews)",
   },
+  {
+    id: 7,
+    name: "e-Commerce Mobile App design using Adobe XD",
+    description: "lorem",
+    category: "Mobile App",
+    mentor: "Jacob Sianturi",
+    price: 250000,
+    image: CourseImage,
+    tags: ["Mobile App", "Design", "Adobe XD"],
+    review: "4.7 (687 reviews)",
+  },
 ];

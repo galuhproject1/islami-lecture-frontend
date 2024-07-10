@@ -51,7 +51,7 @@ const CourseSection = () => {
       <div className="flex flex-wrap justify-center items-center gap-4 my-8 w-full">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:flex gap-4">
           {filter.map((item, index) => (
-            <div key={index} className="cursor-pointer">
+            <div key={index} className="cursor-pointer hover:bg-slate-200 rounded-xl">
               <div className="border border-[#EBEEF3] p-4 rounded-xl flex justify-center items-center gap-4 w-full h-[80px]">
                 <div className="flex justify-center items-center w-[40px] h-[40px] rounded-md">
                   {item.icon}

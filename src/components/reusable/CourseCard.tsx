@@ -1,19 +1,30 @@
 import { CourseData } from "../../libs/Data/CourseData";
 import { MdStarRate } from "react-icons/md";
 import { priceFormat } from "../../utils/priceFormat";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CourseCard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  // Filter CourseData based on pathname condition
+  let filteredCourses = CourseData;
+  if (!pathname.includes("dashboard")) {
+    filteredCourses = CourseData.slice(0, 3);
+  }
+
   return (
-    <div className="flex flex-wrap justify-center gap-8 md:gap-4 lg:gap-8 font-inter">
-      {CourseData.map((item, index) => (
+    <div className="sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 lg:gap-8 font-inter">
+      {filteredCourses.map((item, index) => (
         <div
           className="w-full sm:w-[320px] md:w-[340px] lg:w-[400px] h-[480px] md:h-[500px] lg:h-[520px] rounded-xl shadow-md p-4 bg-white mx-auto"
           key={index}
         >
           <div className="relative">
-            <div className="absolute top-4 right-4 text-[#2A23C2] bg-[#DBD7F4] p-2 rounded-md font-bold">Best Seller</div>
+            {item.review && (
+              <div className="absolute top-4 right-4 text-[#2A23C2] bg-[#DBD7F4] p-2 rounded-md font-bold">Best Seller</div>
+            )}
             <img src={item.image} alt="course" className="w-full rounded-t-xl" />
           </div>
           <div className="space-y-4 my-2">
