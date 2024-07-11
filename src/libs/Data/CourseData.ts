@@ -15,7 +15,7 @@ export const CourseData: CourseType[] = [
   },
   {
     id: 2,
-    name: "e-Commerce Mobile App design using Adobe XD",
+    name: "e-Commerce Mobile App development with flutter",
     description: "lorem",
     category: "Mobile App",
     mentor: "Jacob Sianturi",
@@ -26,7 +26,7 @@ export const CourseData: CourseType[] = [
   },
   {
     id: 3,
-    name: "e-Commerce Mobile App design using Adobe XD",
+    name: "e-Commerce Mobile App development with kotlin",
     description: "lorem",
     category: "Mobile App",
     mentor: "Jacob Sianturi",
@@ -37,7 +37,7 @@ export const CourseData: CourseType[] = [
   },
   {
     id: 4,
-    name: "e-Commerce Mobile App design using Adobe XD",
+    name: "e-Learning web design using Figma",
     description: "lorem",
     category: "Mobile App",
     mentor: "Jacob Sianturi",
@@ -48,7 +48,7 @@ export const CourseData: CourseType[] = [
   },
   {
     id: 5,
-    name: "e-Commerce Mobile App design using Adobe XD",
+    name: "e-Learning web development with ReactJS",
     description: "lorem",
     category: "Mobile App",
     mentor: "Jacob Sianturi",
@@ -59,7 +59,7 @@ export const CourseData: CourseType[] = [
   },
   {
     id: 6,
-    name: "e-Commerce Mobile App design using Adobe XD",
+    name: "Fundamental JavaScript",
     description: "lorem",
     category: "Mobile App",
     mentor: "Jacob Sianturi",
@@ -70,7 +70,7 @@ export const CourseData: CourseType[] = [
   },
   {
     id: 7,
-    name: "e-Commerce Mobile App design using Adobe XD",
+    name: "Intermediate JavaScript",
     description: "lorem",
     category: "Mobile App",
     mentor: "Jacob Sianturi",
