@@ -1,9 +1,9 @@
 import React, { forwardRef } from "react";
 import Ilustration from "../../assets/images/ilustration/ilustration1.svg";
-import Loginform from "./Loginform";
 import RegisterForm from "./RegisterForm";
 import SurveyForm from "./SurveyForm";
 import UploadForm from "./UploadForm";
+import LoginForm from "./LoginForm";
 
 type Props = {
   type: string;
@@ -49,7 +49,7 @@ const MainCard = forwardRef<HTMLDivElement, Props>(({ type, onCloseModal }, ref)
               type === "survey" ? "w-full py-8 px-12" : "w-full md:w-[60%] py-8 px-12"
             }`}
           >
-            {type === "login" && <Loginform />}
+            {type === "login" && <LoginForm />}
             {type === "register" && <RegisterForm />}
             {type === "upload" && <UploadForm />}
             {type === "survey" && <SurveyForm />}

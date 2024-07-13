@@ -53,8 +53,8 @@ const Footer = () => {
             <p className="text-center md:text-left">
               © Copyright 2022 Islamic Lecture
             </p>
-            <p className="text-center md:text-right flex gap-2">
-              <CiGlobe /> English <IoIosArrowDown />
+            <p className="text-center flex items-center md:text-right flex gap-2">
+              <CiGlobe /> English <IoIosArrowDown className="cursor-pointer" />
             </p>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import CourseCard from "../../../reusable/CourseCard";
+import CourseCard from "../../../reusable/Card/CourseCard";
 import ProgressCourse from "../../../reusable/ProgressCourse";
 import ActivityProgress from "../ActivityProgress";
 import BannerDashboard from "../BannerDashboard";

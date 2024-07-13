@@ -1,4 +1,4 @@
-import { ArticleData } from "../../libs/Data/ArticlesData";
+import { ArticleData } from "../../../libs/Data/ArticlesData";
 
 const BlogCard = () => {
   return (

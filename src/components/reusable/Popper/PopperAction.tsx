@@ -1,5 +1,5 @@
 import { Box, Button, Paper, Popper } from "@mui/material";
-import ModalAction from "./ModalAction";
+import ModalAction from "../Modal/ModalAction";
 import { useState } from "react";
 
 type Props = {

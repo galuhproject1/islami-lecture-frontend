@@ -1,4 +1,4 @@
-import BlogCard from "../../reusable/BlogCard";
+import BlogCard from "../../reusable/Card/BlogCard";
 
 const BlogSection = () => {
   return (

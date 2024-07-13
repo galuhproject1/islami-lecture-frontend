@@ -19,7 +19,7 @@ import { GoSearch } from "react-icons/go";
 import { TransactionData } from "../../../libs/Data/TransactionsData";
 import { priceFormat } from "../../../utils/priceFormat";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import PopperAction from "../../reusable/PopperAction";
+import PopperAction from "../../reusable/Popper/PopperAction";
 import { TransactionType } from "../../../libs/Types/transaction.type";
 
 const TableTransaction = () => {

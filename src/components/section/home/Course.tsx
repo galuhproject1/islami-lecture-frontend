@@ -2,7 +2,7 @@ import BookmarkICon from "../../../assets/images/icon/bookmark.svg";
 import PencilIcon from "../../../assets/images/icon/pencil.svg";
 import CodeIcon from "../../../assets/images/icon/code.svg";
 import SpeakerICon from "../../../assets/images/icon/speaker.svg";
-import CourseCard from "../../reusable/CourseCard";
+import CourseCard from "../../reusable/Card/CourseCard";
 import "./styles.css";
 
 type filter = {

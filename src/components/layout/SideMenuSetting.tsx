@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ModalAction from "../reusable/ModalAction";
+import ModalAction from "../reusable/Modal/ModalAction";
 
 const SideMenuSetting = () => {
   const navigate = useNavigate();

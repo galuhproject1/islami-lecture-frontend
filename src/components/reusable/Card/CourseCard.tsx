@@ -1,6 +1,6 @@
-import { CourseData } from "../../libs/Data/CourseData";
+import { CourseData } from "../../../libs/Data/CourseData";
 import { MdStarRate } from "react-icons/md";
-import { priceFormat } from "../../utils/priceFormat";
+import { priceFormat } from "../../../utils/priceFormat";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const CourseCard = () => {

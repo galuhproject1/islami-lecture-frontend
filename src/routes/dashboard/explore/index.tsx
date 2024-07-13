@@ -1,5 +1,5 @@
 import { InputAdornment, TextField } from "@mui/material";
-import CourseCard from "../../../components/reusable/CourseCard";
+import CourseCard from "../../../components/reusable/Card/CourseCard";
 import BannerDashboard from "../../../components/section/dashboard/BannerDashboard";
 import { CiSearch } from "react-icons/ci";
 import { useState } from "react";

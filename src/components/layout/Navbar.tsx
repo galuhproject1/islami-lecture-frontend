@@ -5,10 +5,10 @@ import { CiBellOn, CiHeart } from "react-icons/ci";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import MainCard from "../auth/MainCard";
-import PopperNotification from "../reusable/PopperNotification";
+import PopperNotification from "../reusable/Popper/PopperNotification";
 import { Modal } from "@mui/material";
 import Profile from "../../assets/images/adobe-stock1.png";
-import PopperProfile from "../reusable/PopperProfile";
+import PopperProfile from "../reusable/Popper/PopperProfile";
 
 type url = {
   name: string;
