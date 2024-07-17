@@ -4,6 +4,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import VideoCourse from "../../../components/section/Course/VideoCourse";
 import AccordionCourse from "../../../components/reusable/AccordionCourse";
 import TabsCourse from "../../../components/section/Course/TabsCourse";
+import CustomButtom from "../../../components/reusable/Button/CustomButton";
 
 const DetailClassPage = () => {
   const router = useNavigate();
@@ -77,25 +78,7 @@ const DetailClassPage = () => {
               borderRadius: "8px",
             }}
           >
-            <Button
-              sx={{
-                width: "100%",
-                height: "52px",
-                backgroundColor: "#3D60DE",
-                borderRadius: "8px",
-                textTransform: "none",
-                fontSize: "16px",
-                fontWeight: 700,
-                fontFamily: "Inter",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#3D60DE",
-                },
-              }}
-              onClick={() => {}}
-            >
-              Modul Selanjutnya
-            </Button>
+            <CustomButtom variant="contained" backroundColor="royalblue" text="Modul Selanjutnya" onClick={() => {}}/>
             <Button
               variant="outlined"
               sx={{

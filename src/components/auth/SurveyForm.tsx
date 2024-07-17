@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -8,6 +7,7 @@ import {
 } from "@mui/material";
 import { useContext, useState } from "react";
 import UserContext from "../../context/UserProvider";
+import CustomButtom from "../reusable/Button/CustomButton";
 
 const SurveyForm = () => {
   const { user, registerUser} = useContext(UserContext) ?? {};
@@ -122,26 +122,9 @@ const SurveyForm = () => {
           ))}
         </FormGroup>
       </Box>
-      <Button
-        variant="contained"
-        sx={{
-          width: "60%",
-          height: "60px",
-          backgroundColor: "#FF4363",
-          borderRadius: "8px",
-          textTransform: "none",
-          fontSize: "16px",
-          fontWeight: 700,
-          fontFamily: "Inter",
-          color: "#FFFFFF",
-          "&:hover": {
-            backgroundColor: "#FF4363",
-          },
-        }}
-        onClick={handleSubmit}
-      >
-        Selanjutnya
-      </Button>
+      <Box width={"60%"}>
+      <CustomButtom variant="contained" backroundColor="redpink" text="Selanjutnya" onClick={() => handleSubmit()} />
+      </Box>
       <Typography
         sx={{
           marginTop: 2,

@@ -3,6 +3,7 @@ import SettingPage from "..";
 import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import CustomInput from "../../../../components/reusable/CustomInput";
+import CustomButtom from "../../../../components/reusable/Button/CustomButton";
 
 const ProfileSetting = () => {
   const [fileName, setFileName] = useState("");
@@ -183,25 +184,14 @@ const ProfileSetting = () => {
             gap: 2,
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              width: "50%",
-              height: "60px",
-              backgroundColor: "#3D60DE",
-              borderRadius: "8px",
-              textTransform: "none",
-              fontSize: "16px",
-              fontWeight: 700,
-              fontFamily: "Inter",
-              color: "#FFFFFF",
-              "&:hover": {
-                backgroundColor: "#3D60DE",
-              },
-            }}
-          >
-            Simpan Perubahan
-          </Button>
+          <Box width={"50%"}>
+            <CustomButtom
+              variant="contained"
+              backroundColor="royalblue"
+              text="Simpan Perubahan"
+              onClick={() => {}}
+            />
+          </Box>
         </Box>
       </Box>
     </SettingPage>

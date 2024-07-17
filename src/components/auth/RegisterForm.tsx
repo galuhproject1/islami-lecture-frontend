@@ -1,8 +1,9 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CustomInput from "../reusable/CustomInput";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import UserContext from "../../context/UserProvider";
+import CustomButtom from "../reusable/Button/CustomButton";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -108,26 +109,7 @@ const RegisterForm = () => {
           gap: 2,
         }}
       >
-        <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            height: "60px",
-            backgroundColor: "#FF4363",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#FFFFFF",
-            "&:hover": {
-              backgroundColor: "#FF4363",
-            },
-          }}
-          onClick={() => handleSubmit()}
-        >
-          Selanjutnya
-        </Button>
+        <CustomButtom variant="contained" text="Selanjutnya" backroundColor="redpink" onClick={() => handleSubmit()}/>
       </Box>
     </Box>
   );

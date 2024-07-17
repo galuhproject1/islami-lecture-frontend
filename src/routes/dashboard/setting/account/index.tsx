@@ -1,7 +1,8 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import SettingPage from "..";
 import CustomInput from "../../../../components/reusable/CustomInput";
 import { useState } from "react";
+import CustomButtom from "../../../../components/reusable/Button/CustomButton";
 
 const AccountSetting = () => {
   const [newPassword, setNewPassword] = useState<string>("");
@@ -76,25 +77,14 @@ const AccountSetting = () => {
             }
           />
         </Box>
-        <Button
-          variant="contained"
-          sx={{
-            width: "50%",
-            height: "60px",
-            backgroundColor: "#3D60DE",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#FFFFFF",
-            "&:hover": {
-              backgroundColor: "#3D60DE",
-            },
-          }}
-        >
-          Ubah Password
-        </Button>
+        <Box width={"50%"}>
+          <CustomButtom
+            variant="contained"
+            backroundColor="royalblue"
+            text="Ubah Password"
+            onClick={() => {}}
+          />
+        </Box>
       </Box>
     </SettingPage>
   );

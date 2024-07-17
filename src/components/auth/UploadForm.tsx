@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import UserContext from "../../context/UserProvider";
+import CustomButtom from "../reusable/Button/CustomButton";
 
 const UploadForm = () => {
   const navigate = useNavigate();
@@ -154,46 +155,8 @@ const UploadForm = () => {
           gap: 2,
         }}
       >
-        <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            height: "60px",
-            backgroundColor: "#FF4363",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#FFFFFF",
-            "&:hover": {
-              backgroundColor: "#FF4363",
-            },
-          }}
-          onClick={() => navigate("/auth/survey")}
-        >
-          Selanjutnya
-        </Button>
-        <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            height: "60px",
-            backgroundColor: "#CFCFDB",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#0B0B2C",
-            "&:hover": {
-              backgroundColor: "#CFCFDB",
-            },
-          }}
-          onClick={() => navigate("/auth/survey")}
-        >
-          Lewati
-        </Button>
+        <CustomButtom variant="contained" backroundColor="redpink" onClick={() => navigate("/auth/survey")} text="Selanjutnya" />
+        <CustomButtom variant="contained" backroundColor="#CFCFDB" onClick={() => navigate("/auth/register")} text="Lewati" />
       </Box>
     </Box>
   );

@@ -1,20 +1,22 @@
 import {
   // Alert,
   Box,
-  Button,
-  CircularProgress,
   Divider,
   Typography,
 } from "@mui/material";
 import CustomInput from "../reusable/CustomInput";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import CustomButtom from "../reusable/Button/CustomButton";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<{ message: string, visible: boolean }>({ message: "", visible: false });
+  const [error, setError] = useState<{ message: string; visible: boolean }>({
+    message: "",
+    visible: false,
+  });
   console.log(error);
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -136,75 +138,24 @@ const LoginForm = () => {
             gap: 2,
           }}
         >
-          <Button
+          <CustomButtom
             variant="contained"
-            sx={{
-              width: "100%",
-              height: "48px",
-              backgroundColor: "#FF4363",
-              borderRadius: "8px",
-              textTransform: "none",
-              fontSize: "16px",
-              fontWeight: 700,
-              fontFamily: "Inter",
-              color: "#FFFFFF",
-              "&:hover": {
-                backgroundColor: "#FF4363",
-              },
-            }}
+            backroundColor="redpink"
             onClick={handleLogin}
-          >
-            {loading ? (
-              <CircularProgress size={24} sx={{ color: "#FFFFFF" }} />
-            ) : (
-              "Signin"
-            )}
-          </Button>
-          <Button
+            text="Sign In"
+            isLoading={loading}
+          />
+          <CustomButtom
             variant="contained"
-            sx={{
-              width: "100%",
-              height: "48px",
-              backgroundColor: "#CFCFDB",
-              borderRadius: "8px",
-              textTransform: "none",
-              fontSize: "16px",
-              fontWeight: 700,
-              fontFamily: "Inter",
-              color: "#1F2F54",
-              "&:hover": {
-                backgroundColor: "#CFCFDB",
-              },
-            }}
+            backroundColor="#CFCFDB"
             onClick={() => navigate("/auth/register")}
-          >
-            Create Account
-          </Button>
+            text="Create Account"
+          />
         </Box>
         <Divider
           sx={{ marginBottom: 2, borderColor: "#979797", borderWidth: 1 }}
         />
-        <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            height: "48px",
-            backgroundColor: "#1F2F54",
-            borderRadius: "8px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            color: "#FFFFFF",
-            lineHeight: "32px",
-            "&:hover": {
-              backgroundColor: "#1F2F54",
-            },
-          }}
-          onClick={() => navigate("/auth/register")}
-        >
-          Masuk/Daftar
-        </Button>
+        <CustomButtom variant="contained" onClick={() => navigate("/auth/register")} text={"Masuk/Daftar"} backroundColor="#1F2F54"/>
       </Box>
     </Box>
   );
