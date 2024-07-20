@@ -8,9 +8,10 @@ type Props = {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   helperText?: string;
+  error?: boolean;
 };
 
-const CustomInput = ({ placeholder, type, onChange, value, helperText }: Props) => {
+const CustomInput = ({ placeholder, type, onChange, value, helperText, error }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -31,6 +32,7 @@ const CustomInput = ({ placeholder, type, onChange, value, helperText }: Props) 
       value={value}
       name={"new-" + type}
       autoComplete="off"
+      error={error}
       helperText={helperText}
       multiline={type == "textarea" ? true : false}
       rows={4}
