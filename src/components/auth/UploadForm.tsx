@@ -1,13 +1,18 @@
 import { Box, Button, MenuItem, Select, SelectChangeEvent, TextField, Typography, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import UserContext from "../../context/UserProvider";
+// import UserContext from "../../context/UserProvider";
 import CustomButtom from "../reusable/Button/CustomButton";
+import { useUserStore } from "../../store/userStore";
 
 const UploadForm = () => {
   const navigate = useNavigate();
-  const {user, registerUser} = useContext(UserContext) ?? {};
+  const { user, registerUser } = useUserStore((state) => ({
+    user: state.user,
+    registerUser: state.registerUser,
+  }));
+  // const {user, registerUser} = useContext(UserContext) ?? {};
   const [fileName, setFileName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [target, setTarget] = useState<string>("");
@@ -17,7 +22,6 @@ const UploadForm = () => {
     if (files && files.length > 0) {
       setFileName(files[0].name);
       setFilePreview(URL.createObjectURL(files[0]));
-
     }
   };
 
@@ -156,7 +160,7 @@ const UploadForm = () => {
         }}
       >
         <CustomButtom variant="contained" backroundColor="redpink" onClick={() => navigate("/auth/survey")} text="Selanjutnya" />
-        <CustomButtom variant="contained" backroundColor="#CFCFDB" onClick={() => navigate("/auth/register")} text="Lewati" />
+        <CustomButtom variant="contained" backroundColor="#CFCFDB" onClick={() => navigate("/auth/survey")} text="Lewati" />
       </Box>
     </Box>
   );

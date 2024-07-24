@@ -1,26 +1,62 @@
 import { Box, Typography } from "@mui/material";
 import CustomInput from "../reusable/CustomInput";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import UserContext from "../../context/UserProvider";
 import CustomButtom from "../reusable/Button/CustomButton";
+import { useUserStore } from "../../store/userStore";
+import { useState } from "react";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const { registerUser } = useContext(UserContext) ?? {};
-  
 
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [errorName, setErrorName] = useState<string>("");
+  const [errorEmail, setErrorEmail] = useState<string>("");
+  const [errorPassword, setErrorPassword] = useState<string>("");
+
+  const registerUser = useUserStore((state) => state.registerUser);
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = () => {
-    // Simulasi pengiriman data context dan akan dipanggil di component upload form
-    if (registerUser) {
-      registerUser({ fullname, email, password });
+    let valid = true;
+
+    if (fullname.trim() === "") {
+      setErrorName("Nama tidak boleh kosong");
+      valid = false;
+    } else if (fullname.length > 50) {
+      setErrorName("Nama tidak boleh lebih dari 50 karakter");
+      valid = false;
+    } else {
+      setErrorName("");
     }
 
-    navigate("/auth/upload");
+    if (email.trim() === "") {
+      setErrorEmail("Email tidak boleh kosong");
+      valid = false;
+    } else if (!validateEmail(email)) {
+      setErrorEmail("Format email salah");
+      valid = false;
+    } else {
+      setErrorEmail("");
+    }
+
+    if (password.trim() === "") {
+      setErrorPassword("Password tidak boleh kosong");
+      valid = false;
+    } else {
+      setErrorPassword("");
+    }
+
+    if (valid) {
+      registerUser({ fullname, email, password });
+      navigate("/auth/upload");
+    }
   };
 
   return (
@@ -63,6 +99,8 @@ const RegisterForm = () => {
           type="name"
           onChange={(e) => setFullname(e.target.value)}
           value={fullname}
+          error={Boolean(errorName)}
+          helperText={errorName}
         />
       </Box>
       <Box sx={{ marginBottom: 2 }}>
@@ -81,6 +119,8 @@ const RegisterForm = () => {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          error={Boolean(errorEmail)}
+          helperText={errorEmail}
         />
       </Box>
       <Box sx={{ marginBottom: 4 }}>
@@ -99,6 +139,8 @@ const RegisterForm = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          error={Boolean(errorPassword)}
+          helperText={errorPassword}
         />
       </Box>
       <Box

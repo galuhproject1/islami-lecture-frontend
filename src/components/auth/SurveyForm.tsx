@@ -5,12 +5,17 @@ import {
   FormGroup,
   Typography,
 } from "@mui/material";
-import { useContext, useState } from "react";
-import UserContext from "../../context/UserProvider";
+import { useState } from "react";
 import CustomButtom from "../reusable/Button/CustomButton";
+import { useUserStore } from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
 
 const SurveyForm = () => {
-  const { user, registerUser} = useContext(UserContext) ?? {};
+  const navigate = useNavigate();
+  const { user, registerUser } = useUserStore((state) => ({
+    user: state.user,
+    registerUser: state.registerUser,
+  }));
   const platforms: string[] = ["Instagram", "Linkedin", "Facebook", "Youtube"];
 
   const [checkedPlatform, setCheckedPlatform] = useState("");
@@ -53,7 +58,7 @@ const SurveyForm = () => {
       console.log("Response:", result);
 
       // Navigasi ke halaman selanjutnya setelah berhasil registrasi
-      // navigate('/next-page');
+      navigate('/');
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
