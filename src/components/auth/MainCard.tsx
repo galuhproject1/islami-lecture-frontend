@@ -3,7 +3,7 @@ import Ilustration from "../../assets/images/ilustration/ilustration1.svg";
 import RegisterForm from "./RegisterForm";
 import SurveyForm from "./SurveyForm";
 import UploadForm from "./UploadForm";
-import LoginForm from "./LoginForm";
+import LoginForm from "./Loginform";
 
 type Props = {
   type: string;
