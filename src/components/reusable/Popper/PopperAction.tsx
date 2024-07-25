@@ -1,6 +1,7 @@
 import { Box, Button, Paper, Popper } from "@mui/material";
 import ModalAction from "../Modal/ModalAction";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 type Props = {
   openPopper: boolean;
@@ -32,6 +33,7 @@ const PopperAction = ({ id, openPopper, anchorEl }: Props) => {
             >
               View Course
             </Button>
+            <Link to={"https://teruslaris.com/"}>
             <Button
               sx={{
                 width: "100%",
@@ -43,12 +45,14 @@ const PopperAction = ({ id, openPopper, anchorEl }: Props) => {
             >
               Download Invoice
             </Button>
+            </Link>
             <Button
               sx={{
                 width: "100%",
                 textTransform: "none",
                 color: "error.main",
                 fontWeight: 700,
+                display: "none", // will be block if can delete transaction
               }}
               variant="text"
               onClick={() => {

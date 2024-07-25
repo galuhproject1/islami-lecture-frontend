@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
+  Checkbox,
   Chip,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   InputAdornment,
   Table,
@@ -28,6 +31,9 @@ const TableTransaction = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [filteredData, setFilteredData] =
     useState<TransactionType[]>(TransactionData);
+  const [showFilter, setShowFilter] = useState<boolean>(false);
+
+  const listFilter = ["Semua", "Lunas", "Belum Bayar"];
 
   //popper action
   const [openPopper, setOpenPopper] = useState(false);
@@ -98,6 +104,7 @@ const TableTransaction = () => {
             },
           }}
           startIcon={<CiFilter size={24} />}
+          onClick={() => setShowFilter(!showFilter)}
         >
           Filter
         </Button>
@@ -127,6 +134,25 @@ const TableTransaction = () => {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
+      </Box>
+      <Box sx={{ display: "flex", gap: 2, width: "100%", justifyContent: "space-between" }}>
+        {showFilter && (
+          <FormGroup sx={{ display: "flex", flexDirection: "row", gap: 4 }}>
+            {listFilter.map((filter, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    size="medium"
+                    onChange={() => console.log("hello")}
+                  />
+                }
+                label={filter}
+              />
+            ))}
+          </FormGroup>
+        )}
+        {showFilter && <Button sx={{ textTransform: "none" }} onClick={() => setShowFilter(false)} variant="text">Cancel Filter</Button>}
       </Box>
       <Box>
         <Table>

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Checkbox, Typography } from "@mui/material";
 import SettingPage from "..";
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
 
@@ -67,6 +67,19 @@ const NotificationSetting = () => {
           gap: 4,
         }}
       >
+        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+          <Checkbox defaultChecked />
+          <Typography
+            sx={{
+              fontSize: "16px",
+              fontWeight: 400,
+              color: "#1F2F54",
+              fontFamily: "Mulish",
+            }}
+          >
+            Tandai telah terbaca
+          </Typography>
+        </Box>
         {notifications.map((notification) => (
           <Box
             key={notification.id}
@@ -83,43 +96,50 @@ const NotificationSetting = () => {
             }}
           >
             <Box sx={{ display: "flex", gap: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  backgroundColor: "#FFBB5426",
+                  width: "48px",
+                  height: "48px",
+                  borderRadius: "50%",
+                  justifyContent: "center",
+                }}
+              >
+                {notification.icon}
+              </Box>
+              <Box>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#1F2F54",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  {notification.name}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    color: "#84818A",
+                    fontFamily: "Mulish",
+                  }}
+                >
+                  {notification.description}
+                </Typography>
+              </Box>
+            </Box>
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
-                backgroundColor: "#FFBB5426",
-                width: "48px",
-                height: "48px",
-                borderRadius: "50%",
-                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "end",
+                gap: 2,
               }}
             >
-              {notification.icon}
-            </Box>
-            <Box>
-              <Typography
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#1F2F54",
-                  fontFamily: "Mulish",
-                }}
-              >
-                {notification.name}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  color: "#84818A",
-                  fontFamily: "Mulish",
-                }}
-              >
-                {notification.description}
-              </Typography>
-            </Box>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "end", gap: 2 }}>
               <Typography
                 sx={{
                   fontSize: "14px",
@@ -130,7 +150,14 @@ const NotificationSetting = () => {
               >
                 {notification.time}
               </Typography>
-              <Box sx={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#DB5962" }}></Box>
+              <Box
+                sx={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  backgroundColor: "#DB5962",
+                }}
+              ></Box>
             </Box>
           </Box>
         ))}

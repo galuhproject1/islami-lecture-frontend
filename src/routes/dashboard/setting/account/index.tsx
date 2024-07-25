@@ -33,18 +33,41 @@ const AccountSetting = () => {
           gap: 4,
         }}
       >
-        <Box>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: 600,
-              color: "#1F2F54",
-              fontFamily: "Mulish",
-            }}
-          >
-            Email
-          </Typography>
-          <CustomInput placeholder="example@email.com" />
+        <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
+          <Box>
+            <Typography
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#1F2F54",
+                fontFamily: "Mulish",
+              }}
+            >
+              Email
+            </Typography>
+            <CustomInput placeholder="example@email.com" />
+          </Box>
+          <Box>
+            <Typography
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#1F2F54",
+                fontFamily: "Mulish",
+              }}
+            >
+              New Email
+            </Typography>
+            <CustomInput placeholder="example@email.com" />
+          </Box>
+          <Box width={"50%"}>
+            <CustomButtom
+              variant="contained"
+              backroundColor="royalblue"
+              text="Ubah Email"
+              onClick={() => {}}
+            />
+          </Box>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Typography

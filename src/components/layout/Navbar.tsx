@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
-import { CiBellOn, CiHeart } from "react-icons/ci";
+import { CiBellOn } from "react-icons/ci";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import MainCard from "../auth/MainCard";
@@ -121,7 +121,7 @@ const Navbar = () => {
         {showMobileMenu && (
           <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50 flex flex-col items-center justify-center">
             <div className="flex items-center justify-end w-full p-4 gap-4 absolute top-0 right-4">
-              <CiHeart size={24} />
+              {/* <CiHeart size={24} /> will use in phase 2 */}
               <CiBellOn size={24} />
               <button
                 className="bg-[#CFCFDB] p-4 rounded-md text-[16px] font-bold text-primary"
@@ -172,7 +172,7 @@ const Navbar = () => {
 
         {/* Menu ikon pada kanan untuk tampilan desktop */}
         <div className="hidden md:flex items-center gap-8 cursor-pointer">
-          <CiHeart size={24} />
+          {/* <CiHeart size={24} /> will use in phase 2 */}
           <button onClick={handleClickPopper}>
             <CiBellOn size={24} />
           </button>

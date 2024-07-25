@@ -111,7 +111,7 @@ const ModalAction = ({ open, onClose, title, desc, onSubmit }: Props) => {
               }}
               onClick={onSubmit}
             >
-              {title.includes("Delete") ? "Delete" : "Logout"}
+              {title.includes("Delete") ? "Delete" : title.includes("Logout") ? "Logout" : "Oke"}
             </Button>
           </Box>
         </Box>
