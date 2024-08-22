@@ -72,7 +72,7 @@ const ProfileSetting = () => {
     }
 
     try {
-      const response = await api.patch("/user/profile", data, {
+      const response = await api.post("/user/profile", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -220,7 +220,7 @@ const ProfileSetting = () => {
             onChange={handleInputChange}
           />
         </Box>
-        <Box>
+        {/* <Box>
           <Typography
             sx={{
               fontSize: "16px",
@@ -243,7 +243,7 @@ const ProfileSetting = () => {
                 : ""
             }
           />
-        </Box>
+        </Box> */}
         <Box>
           <Typography
             sx={{
@@ -263,7 +263,7 @@ const ProfileSetting = () => {
             onChange={handleInputChange}
           />
         </Box>
-        <Box>
+        {/* <Box >
           <Typography
             sx={{
               fontSize: "16px",
@@ -275,7 +275,7 @@ const ProfileSetting = () => {
             Biografi user
           </Typography>
           <CustomInput placeholder="" name="bio" value={userData?.name} />
-        </Box>
+        </Box> */}
         <Box
           sx={{
             marginBottom: 2,

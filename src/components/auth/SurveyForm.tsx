@@ -35,34 +35,31 @@ const SurveyForm = () => {
   };
 
   const handleSubmit = async () => {
-    const data = {
-      fullname: user?.fullname,
-      email: user?.email,
-      password: user?.password,
-      password_confirmation: user?.password,
-      avatar: user?.avatar,
-      target: user?.target,
-      source: checkedPlatforms.join(", "), // Combine selected platforms into a string
-    };
+    const formData = new FormData();
+
+    formData.append("name", user?.fullname || "");
+    formData.append("email", user?.email || "");
+    formData.append("password", user?.password || "");
+    formData.append("password_confirmation", user?.password || "");
+    formData.append("avatar", user?.avatar || "");
+    formData.append("personal_target", user?.target || "");
+    formData.append("references", checkedPlatforms.join(","));
 
     try {
-      // Ganti URL_API dengan URL sesuai dengan endpoint API Anda
-      const response = await api.post("/auth/register",{
-        ...data,
-        // content aplication form data
+      const response = await api.post("/auth/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      if (response.status !== 200) {
+      if (response.status !== 201) {
         throw new Error("Gagal registrasi");
       }
 
       // Navigasi ke halaman selanjutnya setelah berhasil registrasi
+      //please redirect to home but set cookies 
       navigate('/');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Error:", error.message);
       // Handle error jika diperlukan
