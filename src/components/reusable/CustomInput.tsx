@@ -5,13 +5,14 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 type Props = {
   placeholder: string;
   type?: string;
+  name?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   helperText?: string;
   error?: boolean;
 };
 
-const CustomInput = ({ placeholder, type, onChange, value, helperText, error }: Props) => {
+const CustomInput = ({ placeholder, type, name, onChange, value, helperText, error }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -30,7 +31,7 @@ const CustomInput = ({ placeholder, type, onChange, value, helperText, error }: 
       type={type === "password" && showPassword ? "text" : type}
       onChange={onChange}
       value={value}
-      name={"new-" + type}
+      name={name}
       autoComplete="off"
       error={error}
       helperText={helperText}

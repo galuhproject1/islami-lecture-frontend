@@ -3,11 +3,12 @@ import { Button, CircularProgress } from "@mui/material";
 type Props = {
   text: string;
   variant: "text" | "outlined" | "contained";
+  type?: "button" | "submit" | "reset" | undefined;
   backroundColor: string;
   isLoading?: boolean;
-  onClick: (param?: string) => void;
+  onClick?: (_param?: string) => void;
 };
-const CustomButtom = ({ text, variant, backroundColor, isLoading, onClick }: Props) => {
+const CustomButtom = ({ text, variant, type, backroundColor, isLoading, onClick }: Props) => {
   //function switch case backroundColor
   const changeBgColor = (backroundColor: string) => {
     switch (backroundColor) {
@@ -41,6 +42,7 @@ const CustomButtom = ({ text, variant, backroundColor, isLoading, onClick }: Pro
   return (
     <Button
       variant={variant}
+      type={type}
       sx={{
         width: "100%",
         padding: "12px 16px",
@@ -56,7 +58,7 @@ const CustomButtom = ({ text, variant, backroundColor, isLoading, onClick }: Pro
           backgroundColor: changeBgColor(backroundColor),
         },
       }}
-      onClick={() => onClick()}
+      onClick={onClick ? () => onClick() : undefined}
     >
       {isLoading ? <CircularProgress size={24} sx={{ color: "#FFFFFF" }} /> : text}
     </Button>

@@ -1,12 +1,40 @@
 import { Box, Typography } from "@mui/material";
 import SettingPage from "..";
 import CustomInput from "../../../../components/reusable/CustomInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButtom from "../../../../components/reusable/Button/CustomButton";
+import { getUser } from "../../../../api/user-service/get-user";
 
 const AccountSetting = () => {
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
+  const [userData, setUserData] = useState<any>(null);
+
+  // Get user data
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      const { data, error } = await getUser();
+
+      if (error) {
+        setError(error);
+        setLoading(false);
+      } else {
+        // setUserData(data);
+        // setFormData({
+        //   name: data?.username || "",
+        //   phone: data?.phone || "",
+        //   avatar: null,
+        // });
+        setUserData(data);
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleNewPasswordChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -45,7 +73,7 @@ const AccountSetting = () => {
             >
               Email
             </Typography>
-            <CustomInput placeholder="example@email.com" />
+            <CustomInput placeholder="" value={userData?.email} />
           </Box>
           <Box>
             <Typography

@@ -9,6 +9,7 @@ import PopperNotification from "../reusable/Popper/PopperNotification";
 import { Modal } from "@mui/material";
 import Profile from "../../assets/images/adobe-stock1.png";
 import PopperProfile from "../reusable/Popper/PopperProfile";
+import Cookies from "js-cookie";
 
 type url = {
   name: string;
@@ -81,7 +82,7 @@ const Navbar = () => {
     setShowMobileMenu(false);
   }, [pathname]);
 
-  const user = localStorage.getItem("userData") || "{}";
+  const user = Cookies.get("user") || "{}";
 
   useEffect(() => {
     if (user !== "{}") {
@@ -186,9 +187,9 @@ const Navbar = () => {
                 alt="profile"
                 className="w-[24px] h-[24px] md:w-[32px] md:h-[32px] lg:w-[40px] lg:h-[40px] rounded-full"
               />
-              <div>
-                <p className="text-[16px] font-bold">Insan Cendekia</p>
-                <p className="text-[12px] text-[#9A9AB0]">Admin@gmail.com</p>
+              <div className="hidden md:block text-start">
+                <p className="text-[16px] font-bold">{JSON.parse(user).name}</p>
+                <p className="text-[12px] text-[#9A9AB0]">{JSON.parse(user).email}</p>
               </div>
             </button>
           ) : (

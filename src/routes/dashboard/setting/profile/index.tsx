@@ -1,19 +1,92 @@
-import { Box, Button, TextField, Typography, styled } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, TextField, Typography, styled } from "@mui/material";
 import SettingPage from "..";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import CustomInput from "../../../../components/reusable/CustomInput";
 import CustomButtom from "../../../../components/reusable/Button/CustomButton";
+import { getUser } from "../../../../api/user-service/get-user";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
+import api from "../../../../libs/api";
 
 const ProfileSetting = () => {
   const [fileName, setFileName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const [userData, setUserData] = useState<any>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    avatar: null as File | null,
+  });
+
+  // Get user data
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      const { data, error } = await getUser();
+
+      if (error) {
+        setError(error);
+        setLoading(false);
+      } else {
+        setUserData(data);
+        setFormData({
+          name: data?.username || "",
+          phone: data?.phone || "",
+          avatar: null,
+        });
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  console.log(userData);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
       setFileName(files[0].name);
       setFilePreview(URL.createObjectURL(files[0]));
+      setFormData({ ...formData, avatar: files[0] });
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const data = new FormData();
+    data.append("_method", "PATCH");
+    data.append("name", formData.name);
+    data.append("phone", formData.phone);
+    if (formData.avatar) {
+      data.append("avatar", formData.avatar);
+    }
+
+    try {
+      const response = await api.patch("/user/profile", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Profile updated successfully:", response.data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      setError(err);
+      setLoading(false);
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
     }
   };
 
@@ -28,9 +101,14 @@ const ProfileSetting = () => {
     whiteSpace: "nowrap",
     width: 1,
   });
+
   return (
     <SettingPage>
+      {loading && <CircularProgress />}
+      {error && <Alert severity="error">{error.message}</Alert>}
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -135,7 +213,12 @@ const ProfileSetting = () => {
           >
             Fullname
           </Typography>
-          <CustomInput placeholder="Agus Pujianto" />
+          <CustomInput
+            placeholder=""
+            name="name"
+            value={userData ? formData.name : ""}
+            onChange={handleInputChange}
+          />
         </Box>
         <Box>
           <Typography
@@ -148,7 +231,18 @@ const ProfileSetting = () => {
           >
             Tanggal Lahir
           </Typography>
-          <CustomInput placeholder="Agus Pujianto" />
+          <CustomInput
+            placeholder=""
+            name="dateOfBirth"
+            type="text"
+            value={
+              userData?.created_at
+                ? format(new Date(userData.created_at), "yyyy-MM-dd", {
+                    locale: id,
+                  })
+                : ""
+            }
+          />
         </Box>
         <Box>
           <Typography
@@ -161,7 +255,13 @@ const ProfileSetting = () => {
           >
             Nomor Handphone
           </Typography>
-          <CustomInput placeholder="082345231234" type="tel" />
+          <CustomInput
+            placeholder=""
+            name="phone"
+            type="tel"
+            value={userData ? formData.phone : ""}
+            onChange={handleInputChange}
+          />
         </Box>
         <Box>
           <Typography
@@ -172,9 +272,9 @@ const ProfileSetting = () => {
               fontFamily: "Mulish",
             }}
           >
-            Biografi User
+            Biografi user
           </Typography>
-          <CustomInput placeholder="Agus Pujianto" />
+          <CustomInput placeholder="" name="bio" value={userData?.name} />
         </Box>
         <Box
           sx={{
@@ -189,7 +289,7 @@ const ProfileSetting = () => {
               variant="contained"
               backroundColor="royalblue"
               text="Simpan Perubahan"
-              onClick={() => {}}
+              type="submit"
             />
           </Box>
         </Box>
@@ -197,4 +297,5 @@ const ProfileSetting = () => {
     </SettingPage>
   );
 };
+
 export default ProfileSetting;
