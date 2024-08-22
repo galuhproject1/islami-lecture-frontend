@@ -1,4 +1,13 @@
-import { Box, Button, MenuItem, Select, SelectChangeEvent, TextField, Typography, styled } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+  styled,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
@@ -12,16 +21,25 @@ const UploadForm = () => {
     user: state.user,
     registerUser: state.registerUser,
   }));
-  // const {user, registerUser} = useContext(UserContext) ?? {};
-  const [fileName, setFileName] = useState("");
+  console.log("User:", user);
+  // eslint-disable-next-line no-unused-vars
+  const [file, setFile] = useState<File | null>(null);
+  // const [fileName, setFileName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [target, setTarget] = useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      setFileName(files[0].name);
-      setFilePreview(URL.createObjectURL(files[0]));
+      const selectedFile = files[0];
+      setFile(selectedFile);
+      // setFileName(selectedFile.name);
+      setFilePreview(URL.createObjectURL(selectedFile));
+
+      // Update global state
+      if (user && registerUser) {
+        registerUser({ ...user, avatar: selectedFile });
+      }
     }
   };
 
@@ -67,7 +85,15 @@ const UploadForm = () => {
           alignItems: "center",
         }}
       >
-        {filePreview ? <img src={filePreview} alt="Preview" className="w-[90px] h-[90px] rounded-full" /> : <IoCloudUploadOutline size={24} className="font-bold" />}
+        {filePreview ? (
+          <img
+            src={filePreview}
+            alt="Preview"
+            className="w-[90px] h-[90px] rounded-full"
+          />
+        ) : (
+          <IoCloudUploadOutline size={24} className="font-bold" />
+        )}
       </Box>
       <Typography
         variant="h4"
@@ -96,7 +122,7 @@ const UploadForm = () => {
         <Box sx={{ position: "relative", width: "100%" }}>
           <TextField
             sx={{ width: "100%" }}
-            value={fileName ? fileName : "Tidak ada file terpilih"}
+            value={file ? file?.name : "Tidak ada file terpilih"}
           />
           <Button
             component="label"
@@ -159,8 +185,18 @@ const UploadForm = () => {
           gap: 2,
         }}
       >
-        <CustomButtom variant="contained" backroundColor="redpink" onClick={() => navigate("/auth/survey")} text="Selanjutnya" />
-        <CustomButtom variant="contained" backroundColor="#CFCFDB" onClick={() => navigate("/auth/survey")} text="Lewati" />
+        <CustomButtom
+          variant="contained"
+          backroundColor="redpink"
+          onClick={() => navigate("/auth/survey")}
+          text="Selanjutnya"
+        />
+        <CustomButtom
+          variant="contained"
+          backroundColor="#CFCFDB"
+          onClick={() => navigate("/auth/survey")}
+          text="Lewati"
+        />
       </Box>
     </Box>
   );

@@ -54,7 +54,7 @@ const RegisterForm = () => {
     }
 
     if (valid) {
-      registerUser({ fullname, email, password });
+      registerUser({ fullname, email, password, password_confirmation: password });
       navigate("/auth/upload");
     }
   };

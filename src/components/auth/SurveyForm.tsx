@@ -9,6 +9,7 @@ import { useState } from "react";
 import CustomButtom from "../reusable/Button/CustomButton";
 import { useUserStore } from "../../store/userStore";
 import { useNavigate } from "react-router-dom";
+import api from "../../libs/api";
 
 const SurveyForm = () => {
   const navigate = useNavigate();
@@ -16,46 +17,47 @@ const SurveyForm = () => {
     user: state.user,
     registerUser: state.registerUser,
   }));
+  
   const platforms: string[] = ["Instagram", "Linkedin", "Facebook", "Youtube"];
 
-  const [checkedPlatform, setCheckedPlatform] = useState("");
+  const [checkedPlatforms, setCheckedPlatforms] = useState<string[]>([]);
 
   const handleCheckboxChange = (platform: string) => {
-    setCheckedPlatform(platform);
+    setCheckedPlatforms((prev) =>
+      prev.includes(platform)
+        ? prev.filter((item) => item !== platform)
+        : [...prev, platform]
+    );
 
     if (user && registerUser) {
-      registerUser({ ...user, source: platform });
+      registerUser({ ...user, references: checkedPlatforms });
     }
   };
 
   const handleSubmit = async () => {
-    // Simulasi pengiriman data ke API
     const data = {
       fullname: user?.fullname,
       email: user?.email,
       password: user?.password,
-      fileName: user?.fileName,
+      password_confirmation: user?.password,
+      avatar: user?.avatar,
       target: user?.target,
-      source: user?.source,
+      source: checkedPlatforms.join(", "), // Combine selected platforms into a string
     };
 
     try {
       // Ganti URL_API dengan URL sesuai dengan endpoint API Anda
-      const response = await fetch("URL_API", {
-        method: "POST",
+      const response = await api.post("/auth/register",{
+        ...data,
+        // content aplication form data
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
-        body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        throw new Error("Gagal melakukan registrasi");
+      if (response.status !== 200) {
+        throw new Error("Gagal registrasi");
       }
-
-      // Handle response jika diperlukan
-      const result = await response.json();
-      console.log("Response:", result);
 
       // Navigasi ke halaman selanjutnya setelah berhasil registrasi
       navigate('/');
@@ -66,6 +68,7 @@ const SurveyForm = () => {
       // Handle error jika diperlukan
     }
   };
+
   return (
     <Box
       sx={{
@@ -108,7 +111,7 @@ const SurveyForm = () => {
               control={
                 <Checkbox
                   size="large"
-                  checked={checkedPlatform === platform}
+                  checked={checkedPlatforms.includes(platform)}
                   onChange={() => handleCheckboxChange(platform)}
                   sx={{
                     color: "#FFEAE3",
@@ -128,7 +131,12 @@ const SurveyForm = () => {
         </FormGroup>
       </Box>
       <Box width={"60%"}>
-      <CustomButtom variant="contained" backroundColor="redpink" text="Selanjutnya" onClick={() => handleSubmit()} />
+        <CustomButtom
+          variant="contained"
+          backroundColor="redpink"
+          text="Selanjutnya"
+          onClick={handleSubmit}
+        />
       </Box>
       <Typography
         sx={{

@@ -1,89 +1,73 @@
 import {
-  // Alert,
+  Alert,
   Box,
   Divider,
   Typography,
-} from "@mui/material";
-import CustomInput from "../reusable/CustomInput";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import CustomButtom from "../reusable/Button/CustomButton";
+} from '@mui/material';
+import CustomInput from '../reusable/CustomInput';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import CustomButtom from '../reusable/Button/CustomButton';
+import { handleLogin } from '../../api/auth-service/login';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<{ message: string; visible: boolean }>({
-    message: "",
+    message: '',
     visible: false,
   });
-  console.log(error);
+
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  // Handles the login process asynchronously.
-  const handleLogin = async () => {
-    setLoading(true);
-
-    try {
-      // Simulate async login check
-      setTimeout(() => {
-        let role = "";
-
-        if (email === "user@gmail.com") {
-          role = "user";
-        } else if (email === "mentor@gmail.com") {
-          role = "mentor";
-        } else {
-          throw new Error("Email tidak terdaftar");
-        }
-
-        const data = {
-          email: email,
-          role: role,
-        };
-
-        localStorage.setItem("userData", JSON.stringify(data));
-
-        // Move setLoading(false) here
-        setLoading(false);
-        navigate("/dashboard");
-      }, 2000);
-    } catch (error) {
-      console.error("Error during login:", error);
-      setError({ message: "Email atau password salah", visible: true });
-      setLoading(false);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    }
+  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
   };
 
-  const userData = localStorage.getItem("userData");
-  const role = userData ? JSON.parse(userData).role : null;
-  console.log(role);
+  const onLoginClick = () => {
+    handleLogin(email, password, setLoading, setError, navigate);
+  };
+
+  error.visible && setTimeout(() => setError({ message: '', visible: false }), 3000);
 
   return (
-    <Box sx={{ position: "relative" }}>
-      {/* {error.visible && <Alert sx={{ position: "fixed", top: 10 }} severity="error">{error.message}</Alert>} */}
+    <Box sx={{ position: 'relative' }}>
+      {error.message && (
+        <Alert
+          severity="error"
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            margin: 'auto',
+            width: '100%',
+            zIndex: 99,
+          }}
+        > 
+          {error.message}
+        </Alert>
+      )}
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          height: "100%",
-          fontFamily: "Inter",
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          height: '100%',
+          fontFamily: 'Inter',
         }}
       >
         <Typography
           variant="h4"
           sx={{
             marginBottom: 2,
-            fontSize: "30px",
+            fontSize: '30px',
             fontWeight: 700,
-            color: "#1F2F54",
+            color: '#1F2F54',
           }}
         >
           Sign in
@@ -91,10 +75,10 @@ const LoginForm = () => {
         <Box sx={{ marginBottom: 2 }}>
           <Typography
             sx={{
-              fontSize: "16px",
+              fontSize: '16px',
               fontWeight: 600,
-              color: "#1F2F54",
-              fontFamily: "Mulish",
+              color: '#1F2F54',
+              fontFamily: 'Mulish',
             }}
           >
             Email
@@ -109,22 +93,22 @@ const LoginForm = () => {
         <Box sx={{ marginBottom: 2 }}>
           <Typography
             sx={{
-              fontSize: "16px",
+              fontSize: '16px',
               fontWeight: 600,
-              color: "#1F2F54",
-              fontFamily: "Mulish",
+              color: '#1F2F54',
+              fontFamily: 'Mulish',
             }}
           >
             Password
           </Typography>
-          <CustomInput placeholder="masukkan password" type="password" />
+          <CustomInput placeholder="masukkan password" type="password" onChange={handleChangePassword} value={password} />
           <Typography
             sx={{
-              fontSize: "14px",
+              fontSize: '14px',
               fontWeight: 400,
-              color: "#1F2F54",
-              fontFamily: "Mulish",
-              textAlign: "right",
+              color: '#1F2F54',
+              fontFamily: 'Mulish',
+              textAlign: 'right',
             }}
           >
             Lupa password
@@ -133,29 +117,29 @@ const LoginForm = () => {
         <Box
           sx={{
             marginBottom: 2,
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             gap: 2,
           }}
         >
           <CustomButtom
             variant="contained"
             backroundColor="redpink"
-            onClick={handleLogin}
+            onClick={onLoginClick}
             text="Sign In"
             isLoading={loading}
           />
           <CustomButtom
             variant="contained"
             backroundColor="#CFCFDB"
-            onClick={() => navigate("/auth/register")}
+            onClick={() => navigate('/auth/register')}
             text="Create Account"
           />
         </Box>
         <Divider
-          sx={{ marginBottom: 2, borderColor: "#979797", borderWidth: 1 }}
+          sx={{ marginBottom: 2, borderColor: '#979797', borderWidth: 1 }}
         />
-        <CustomButtom variant="contained" onClick={() => navigate("/auth/register")} text={"Masuk/Daftar"} backroundColor="#1F2F54"/>
+        <CustomButtom variant="contained" onClick={() => navigate('/auth/register')} text="Masuk/Daftar" backroundColor="#1F2F54" />
       </Box>
     </Box>
   );

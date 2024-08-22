@@ -1,54 +1,38 @@
-export const API_GATEWAY = import.meta.env.VITE_API;
-// please change this fuction with axios library
+import axios from "axios";
+import Cookies from "js-cookie";
 
-const getHeaders = () => ({
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+export const API_GATEWAY = import.meta.env.VITE_API_URL;
+
+const api = axios.create({
+  baseURL: API_GATEWAY,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-const checkResponse = async (response: Response) => {
-  if (!response.ok) {
-    if (response.status === 403) {
+// Menggunakan interceptor untuk menambahkan Authorization header dengan token jika ada
+api.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get("access_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 403) {
       // Handle Unauthorized error here
       window.location.reload();
     }
-    const error = await response.json();
     return Promise.reject(error);
   }
-  return response.json();
-};
+);
 
-export const api = {
-  get: async (url: string) => {
-    const response = await fetch(`${API_GATEWAY}${url}`, {
-      method: "GET",
-      headers: getHeaders(),
-    });
-    return checkResponse(response);
-  },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  post: async (url: string, data: any) => {
-    const response = await fetch(`${API_GATEWAY}${url}`, {
-      method: "POST",
-      headers: getHeaders(),
-      body: JSON.stringify(data),
-    });
-    return checkResponse(response);
-  },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  put: async (url: string, data: any) => {
-    const response = await fetch(`${API_GATEWAY}${url}`, {
-      method: "PUT",
-      headers: getHeaders(),
-      body: JSON.stringify(data),
-    });
-    return checkResponse(response);
-  },
-  delete: async (url: string) => {
-    const response = await fetch(`${API_GATEWAY}${url}`, {
-      method: "DELETE",
-      headers: getHeaders(),
-    });
-    return checkResponse(response);
-  },
-};
+export default api;

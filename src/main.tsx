@@ -111,81 +111,101 @@ const router = createBrowserRouter([
   {
     path: "/dashboard/explore",
     element: (
-      <MainLayout>
-        <Explore />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <Explore />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/class",
     element: (
-      <MainLayout>
-        <ClassPage />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <ClassPage />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/class/:id",
     element: (
-      <MainLayout>
-        <DetailClassPage />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <DetailClassPage />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/class/create",
     element: (
-      <MainLayout>
-        <CreateClassPage />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <CreateClassPage />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/transaction",
     element: (
-      <MainLayout>
-        <TransactionPage />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <TransactionPage />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/setting/edit-profile",
     element: (
-      <MainLayout>
-        <ProfileSetting />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <ProfileSetting />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/setting/account-settings",
     element: (
-      <MainLayout>
-        <AccountSetting />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <AccountSetting />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/setting/notification",
     element: (
-      <MainLayout>
-        <NotificationSetting />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <NotificationSetting />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/setting/payment-method",
     element: (
-      <MainLayout>
-        <PaymentMethodSetting />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <PaymentMethodSetting />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/dashboard/setting/privacy-policy",
     element: (
-      <MainLayout>
-        <PrivacyPolicy />
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+          <PrivacyPolicy />
+        </MainLayout>
+      </ProtectedRoute>
     ),
   },
   {
@@ -201,7 +221,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-          <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
 );
