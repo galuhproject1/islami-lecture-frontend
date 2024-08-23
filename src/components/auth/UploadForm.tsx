@@ -9,11 +9,27 @@ import {
   styled,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 // import UserContext from "../../context/UserProvider";
 import CustomButtom from "../reusable/Button/CustomButton";
 import { useUserStore } from "../../store/userStore";
+import api from "../../libs/api";
+
+type TargetDataItem = {
+  id: number;
+  name: {
+    en: string;
+  };
+  slug: {
+    en: string;
+  };
+  type: string;
+  sequence: number;
+  created_at: string;
+  updated_at: string;
+  courses_count: number;
+}
 
 const UploadForm = () => {
   const navigate = useNavigate();
@@ -21,11 +37,10 @@ const UploadForm = () => {
     user: state.user,
     registerUser: state.registerUser,
   }));
-  console.log("User:", user);
   // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState<File | null>(null);
-  // const [fileName, setFileName] = useState("");
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [targetData, setTargetData] = useState<TargetDataItem[] | null>(null);
   const [target, setTarget] = useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +77,19 @@ const UploadForm = () => {
     whiteSpace: "nowrap",
     width: 1,
   });
+
+  useEffect(() => {
+    const getCategory = async () => {
+      try {
+        const response = await api.get("/academic/course/categories");
+        setTargetData(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+    getCategory();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box
@@ -172,9 +200,11 @@ const UploadForm = () => {
           placeholder="Pilih target personal"
           onChange={handleChangeTarget}
         >
-          <MenuItem value={"bahasaArab"}>Bahasa Arab</MenuItem>
-          <MenuItem value={"sejarahIslam"}>Sejarah Islam</MenuItem>
-          <MenuItem value={"fiqih"}>Fiqih</MenuItem>
+          {targetData?.map((data) => (
+            <MenuItem key={data.id} value={data.slug.en}>
+              {data?.name?.en}
+            </MenuItem>
+          ))}
         </Select>
       </Box>
       <Box

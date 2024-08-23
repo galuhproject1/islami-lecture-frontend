@@ -1,3 +1,4 @@
+import Marquee from "react-fast-marquee";
 import TestimoniCard from "../../reusable/TestimoniCard";
 
 const TestimonialSection = () => {
@@ -14,7 +15,10 @@ const TestimonialSection = () => {
         aliqua.
       </p>
       <div className="w-full my-8">
-        <TestimoniCard />
+        <Marquee className="flex gap-x-16">
+          <TestimoniCard />
+          <TestimoniCard />
+        </Marquee>
       </div>
     </div>
   );

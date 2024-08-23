@@ -2,7 +2,7 @@ import { TestimoniData } from "../../libs/Data/TestimoniData"
 
 const TestimoniCard = () => {
     return (
-        <div className="flex gap-8 flex-col md:flex-row">
+        <div className="flex space-x-16 flex-col md:flex-row">
             {TestimoniData.map((testimoni) => (
                 <div key={testimoni.id} className="p-2">
                     <div className="flex gap-4 items-center">
@@ -12,7 +12,7 @@ const TestimoniCard = () => {
                             <p className="text-[14px] text-[#FF4363]">{testimoni.position}</p>
                         </div>
                     </div>
-                    <p className="text-[18px] text-[#6E7991] mt-4 text-start">{testimoni.description}</p>
+                    <p className="text-[18px] text-[#6E7991] mt-4 text-start w-80">"{testimoni.description}"</p>
                 </div>
             ))}
         </div>
