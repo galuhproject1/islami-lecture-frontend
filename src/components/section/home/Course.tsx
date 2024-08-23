@@ -4,6 +4,9 @@ import CodeIcon from "../../../assets/images/icon/code.svg";
 import SpeakerICon from "../../../assets/images/icon/speaker.svg";
 import CourseCard from "../../reusable/Card/CourseCard";
 import "./styles.css";
+import { useEffect, useState } from "react";
+import { CourseData } from "../../../libs/Types/course";
+import api from "../../../libs/api";
 
 type filter = {
   name: string;
@@ -38,6 +41,21 @@ const CourseSection = () => {
       icon: <img src={CodeIcon} alt="code" />,
     },
   ];
+
+  const [dataCourse, setDataCourse] = useState<CourseData[]>([]);
+
+  useEffect(() => {
+    const getAllCourse = async () => {
+      try {
+        const response = await api.get("/academic/courses");
+        setDataCourse(response.data.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+    getAllCourse();
+  }, []);
+
   return (
     <div className="flex flex-col justify-center items-center relative overflow-x-hidden">
       <h1 className="text-[18px] font-bold text-[#FF4363]">OUR COURSE</h1>
@@ -51,7 +69,10 @@ const CourseSection = () => {
       <div className="flex flex-wrap justify-center items-center gap-4 my-8 w-full">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:flex gap-4">
           {filter.map((item, index) => (
-            <div key={index} className="cursor-pointer hover:bg-slate-200 rounded-xl">
+            <div
+              key={index}
+              className="cursor-pointer hover:bg-slate-200 rounded-xl"
+            >
               <div className="border border-[#EBEEF3] p-4 rounded-xl flex justify-center items-center gap-4 w-full h-[80px]">
                 <div className="flex justify-center items-center w-[40px] h-[40px] rounded-md">
                   {item.icon}
@@ -64,7 +85,7 @@ const CourseSection = () => {
       </div>
 
       <div className="w-full">
-        <CourseCard />
+        <CourseCard dataCourse={dataCourse} />
       </div>
       <button className="bg-[#FF4363] text-white py-4 px-8 rounded-xl font-bold text-[16px] mt-12">
         Browse All

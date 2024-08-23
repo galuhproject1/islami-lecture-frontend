@@ -1,40 +1,17 @@
 import { MdStarRate } from "react-icons/md";
 import { priceFormat } from "../../../utils/priceFormat";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../../../libs/api";
 import CourseImage from "../../../assets/images/ilustration/course.png";
+import { CourseData } from "../../../libs/Types/course";
 
-type Course = {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  meta: string | null;
-  deleted_at: string | null;
-  created_at: string;
-  updated_at: string;
-  image?: string | null;
-  review?: string;
+type Props = {
+  dataCourse: CourseData[];
 };
 
-const CourseCard = () => {
+const CourseCard = ({ dataCourse }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  const [dataCourse, setDataCourse] = useState<Course[]>([]);
-
-  useEffect(() => {
-    const getAllCourse = async () => {
-      try {
-        const response = await api.get("/academic/courses");
-        setDataCourse(response.data.data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
-    getAllCourse();
-  }, []);
 
   let filteredCourses = dataCourse;
 
@@ -44,7 +21,7 @@ const CourseCard = () => {
 
   return (
     <div className="sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 lg:gap-8 font-inter">
-      {filteredCourses.map((item, index) => (
+      {filteredCourses?.map((item, index) => (
         <div
           className="w-full sm:w-[320px] md:w-[340px] lg:w-[400px] h-[480px] md:h-[500px] lg:h-[520px] rounded-xl shadow-md p-4 bg-white mx-auto"
           key={index}
@@ -89,7 +66,7 @@ const CourseCard = () => {
               <button
                 className="bg-[#3D60DE] text-white p-2 md:p-4 rounded-xl font-bold text-[14px] md:text-[16px]"
                 onClick={() => {
-                  navigate(`/e-course/${item.id}`);
+                  navigate(`/e-course/${item.slug}`);
                 }}
               >
                 Belajar Sekarang
