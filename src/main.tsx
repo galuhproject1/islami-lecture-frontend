@@ -88,15 +88,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/auth/register",
-    element: <Register />,
+    element: (
+      <ProtectedRoute>
+        <Register />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/auth/upload",
-    element: <UploadPage />,
+    element: (
+      <ProtectedRoute>
+        <UploadPage />
+      </ProtectedRoute>
+    )
   },
   {
     path: "/auth/survey",
-    element: <SurveyPage />,
+    element: (
+      <ProtectedRoute>
+        <SurveyPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/dashboard",

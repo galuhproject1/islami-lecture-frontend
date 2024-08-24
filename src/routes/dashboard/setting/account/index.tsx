@@ -3,7 +3,7 @@ import SettingPage from "..";
 import CustomInput from "../../../../components/reusable/CustomInput";
 import { useEffect, useState } from "react";
 import CustomButtom from "../../../../components/reusable/Button/CustomButton";
-import { getUser } from "../../../../api/user-service/get-user";
+import { getUser } from "../../../../api/user/get-user";
 
 const AccountSetting = () => {
   const [newPassword, setNewPassword] = useState<string>("");

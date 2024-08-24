@@ -15,7 +15,7 @@ const CourseCard = ({ dataCourse }: Props) => {
 
   let filteredCourses = dataCourse;
 
-  if (!pathname.includes("dashboard")) {
+  if (pathname != "/dashboard/explore") {
     filteredCourses = dataCourse.slice(0, 3);
   }
 

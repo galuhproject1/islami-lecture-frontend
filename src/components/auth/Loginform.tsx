@@ -8,7 +8,7 @@ import CustomInput from '../reusable/CustomInput';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import CustomButtom from '../reusable/Button/CustomButton';
-import { handleLogin } from '../../api/auth-service/login';
+import { handleLogin } from '../../api/auth/login';
 
 const LoginForm = () => {
   const navigate = useNavigate();

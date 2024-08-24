@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import LoadingScreen from '../reusable/LoadingScreen';
 import Cookies from "js-cookie";
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -21,7 +22,12 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     return <LoadingScreen />;
   }
 
-  if (!isAuthenticated) {
+  if (isAuthenticated && (location.pathname.startsWith("/auth"))) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  // Jika user tidak memiliki token, redirect ke halaman utama (misal: /)
+  if (!isAuthenticated && location.pathname.startsWith("/dashboard")) {
     return <Navigate to="/" replace />;
   }
 

@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import CustomInput from "../../../../components/reusable/CustomInput";
 import CustomButtom from "../../../../components/reusable/Button/CustomButton";
-import { getUser } from "../../../../api/user-service/get-user";
-import { format } from "date-fns";
-import { id } from "date-fns/locale";
+import { getUser } from "../../../../api/user/get-user";
 import api from "../../../../libs/api";
 
 const ProfileSetting = () => {

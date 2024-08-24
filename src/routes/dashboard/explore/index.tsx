@@ -2,8 +2,8 @@ import {
   Pagination,
   InputAdornment,
   TextField,
-  CircularProgress,
   IconButton,
+  Skeleton,
 } from "@mui/material";
 import CourseCard from "../../../components/reusable/Card/CourseCard";
 import BannerDashboard from "../../../components/section/dashboard/BannerDashboard";
@@ -25,28 +25,40 @@ const Explore = () => {
   };
 
   const getAllCourse = async (page: number, search: string) => {
-    setIsLoading(true);
     try {
-      const response = await api.get("/academic/courses", {
-        params: {
-          filter: { search },
-          page,
-        },
-      });
+      const params: any = { page };
+
+      if (search.trim() !== "") {
+        params.filter = { search };
+      }
+
+      const response = await api.get("/academic/courses", { params });
       setDataCourse(response.data.data);
       setCurrentPage(response.data.current_page);
       setTotalPages(response.data.last_page);
     } catch (error) {
       console.error("Error fetching courses:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      getAllCourse(currentPage, search);
-    }, 3000); // 3 detik
+    // Load data pertama kali tanpa debounce
+    const loadInitialData = async () => {
+      setIsLoading(true);
+      await getAllCourse(currentPage, search);
+      setIsLoading(false);
+    };
+
+    loadInitialData();
+  }, []); // hanya dijalankan sekali saat komponen di-mount
+
+  useEffect(() => {
+    // Load data dengan debounce saat currentPage atau search berubah
+    const delayDebounceFn = setTimeout(async () => {
+      setIsLoading(true);
+      await getAllCourse(currentPage, search);
+      setIsLoading(false);
+    }, 2000);
 
     return () => clearTimeout(delayDebounceFn);
   }, [currentPage, search]);
@@ -87,32 +99,45 @@ const Explore = () => {
         onChange={handleSearch}
         value={search}
       />
-      {isLoading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            height: "100vh",
-            alignItems: "center",
-          }}
-        >
-          <CircularProgress />
-        </div>
-      ) : (
-        <div>
-          <h1 className="text-2xl font-bold">Hasil Pencarian</h1>
-          <div className="mt-4">
+
+      <div>
+        <h1 className="text-2xl font-bold">Hasil Pencarian</h1>
+        <div className="mt-4">
+          {isLoading ? (
+            <div className="grid grid-cols-3 gap-4">
+              {[...Array(3)].map((_, index) => (
+                <Skeleton
+                  sx={{ borderRadius: "8px", bgcolor: "rgba(0, 0, 0, 0.1)" }}
+                  variant="rectangular"
+                  key={index}
+                  width="100%"
+                  height={200}
+                />
+              ))}
+            </div>
+          ) : (
             <CourseCard dataCourse={dataCourse} />
-          </div>
+          )}
         </div>
-      )}
-      <Pagination
-        count={totalPages}
-        page={currentPage}
-        onChange={handlePageChange}
-        color="primary"
-        sx={{ marginTop: "20px" }}
-      />
+      </div>
+      <div className="flex justify-center">
+        {isLoading ? (
+          <Skeleton
+            sx={{ borderRadius: "8px", bgcolor: "rgba(0, 0, 0, 0.1)", mt: 2 }}
+            variant="rectangular"
+            width="50%"
+            height={20}
+          />
+        ) : (
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            sx={{ marginTop: "20px" }}
+          />
+        )}
+      </div>
     </div>
   );
 };
