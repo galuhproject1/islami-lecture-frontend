@@ -8,8 +8,14 @@ import {
 import { MdExpandMore } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
 import { DetailCourseData } from "../../libs/Data/DetailCourseData";
+import { CourseDetail } from "../../libs/Types/course";
 
-const AccordionCourse = () => {
+type Props = {
+  dataDetail: CourseDetail;
+}
+
+const AccordionCourse = ({ dataDetail }: Props) => {
+  console.log(dataDetail);
   return (
     <Box>
       {DetailCourseData.map((data) => (
@@ -27,9 +33,9 @@ const AccordionCourse = () => {
             </Typography>
           </AccordionSummary>
           
-          {data.lessons.map((lesson) => (
+          {dataDetail?.modules.map((modules) => (
           <AccordionDetails
-            key={lesson.id}
+            key={modules.id}
             sx={{
               display: "flex",
               justifyContent: "space-between",
@@ -58,7 +64,7 @@ const AccordionCourse = () => {
                   fontFamily: "Mulish",
                 }}
               >
-                {lesson.title}
+                {modules.name}
               </Typography>
             </Box>
             <Typography
@@ -69,7 +75,7 @@ const AccordionCourse = () => {
                 fontFamily: "Mulish",
               }}
             >
-              {lesson.time}
+              5:00
             </Typography>
           </AccordionDetails>
           ))}

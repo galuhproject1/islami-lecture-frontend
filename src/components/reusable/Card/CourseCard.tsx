@@ -67,6 +67,7 @@ const CourseCard = ({ dataCourse }: Props) => {
                 className="bg-[#3D60DE] text-white p-2 md:p-4 rounded-xl font-bold text-[14px] md:text-[16px]"
                 onClick={() => {
                   navigate(`/e-course/${item.slug}`);
+                  window.scrollTo(0, 0);
                 }}
               >
                 Belajar Sekarang

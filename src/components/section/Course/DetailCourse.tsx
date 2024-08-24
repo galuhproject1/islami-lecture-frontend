@@ -3,10 +3,32 @@ import AccordionCourse from "../../reusable/AccordionCourse";
 import VideoCourse from "./VideoCourse";
 import TabsCourse from "./TabsCourse";
 import ReviewCourse from "./ReviewCourse";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import useCourseStore from "../../../store/courseDetailStore";
+import { getCourseDetail } from "../../../api/course/get-course-detail";
+import LoadingScreen from "../../reusable/LoadingScreen";
 
 const DetailCourse = () => {
   const navigate = useNavigate();
+  const { slug } = useParams();
+
+  const { courseDetail, setCourseDetail } = useCourseStore();
+
+  useEffect(() => {
+    const fetchDetailCourse = async () => {
+      const { data, error } = await getCourseDetail(slug as string);
+      if (data) {
+        setCourseDetail(data[0]); // Assuming you only need the first course
+      } else {
+        console.error("Error fetching courses:", error);
+      }
+    };
+    fetchDetailCourse();
+  }, [slug, setCourseDetail]);
+
+  if (!courseDetail) return <LoadingScreen />;
+
   return (
     <Box
       sx={{
@@ -26,7 +48,7 @@ const DetailCourse = () => {
           gap: 2,
         }}
       >
-        <VideoCourse />
+        <VideoCourse dataDetail={courseDetail} />
         <TabsCourse inClass={false} />
         <Box sx={{ backgroundColor: "white", padding: 4, borderRadius: "8px" }}>
           <Typography
@@ -34,7 +56,7 @@ const DetailCourse = () => {
           >
             Modul Pembelajaran
           </Typography>
-        <AccordionCourse />
+          <AccordionCourse dataDetail={courseDetail}/>
         </Box>
         <ReviewCourse />
       </Box>
@@ -60,7 +82,7 @@ const DetailCourse = () => {
             borderRadius: "8px",
           }}
         >
-          <AccordionCourse />
+          <AccordionCourse dataDetail={courseDetail} />
         </Box>
         <Box
           sx={{

@@ -1,5 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { FaCheck } from "react-icons/fa6";
+import useCourseStore from "../../../../store/courseDetailStore";
+import LoadingScreen from "../../../reusable/LoadingScreen";
 
 const overview: string[] = [
   "Create mobile app designs from scratch",
@@ -15,13 +17,11 @@ const requirements: string[] = [
   "No software is required in advance of the course (all software used in the course is free or has a demo version)",
 ];
 
-const description = {
-  content: `This Course is great for people with absolutely no design experience or experienced designers who want to get up to speed quickly with mobile app design. We'll introduce you to the art of making beautiful apps. We'll explore key UI and UX concepts that are essential to building good looking and easy to use apps that are loved by users.
-    \nThe course has a practical component that takes you step-by-step through the workflow of a professional app designer. From user flow diagrams to wireframing to mockups and prototypes.
-    \nStudents completing the course will have the knowledge to create beautiful and lovable apps that leave people with a smile on their face.`,
-};
-
 const TabOne = () => {
+  const courseDetail = useCourseStore((state) => state.courseDetail);
+
+  if (!courseDetail) return <LoadingScreen />;
+
   return (
     <Box>
       {/* what will you get */}
@@ -79,31 +79,38 @@ const TabOne = () => {
           </Box>
         </Box>
         {/* description modulP */}
-        <Box sx={{my: 4 }}>
+        <Box sx={{ my: 4 }}>
           <Typography
             sx={{ fontWeight: 700, fontSize: "24px", color: "primary" }}
           >
             Deskripsi Modul
           </Typography>
           <Box sx={{ flexGrow: 1, my: 4 }}>
-            {description.content.split("\n").map((paragraph, index) => (
-              <Typography
-                key={index}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  color: "primary",
-                  marginBottom: 2,
-                }}
-              >
-                {paragraph}
-              </Typography>
-            ))}
+            <Typography
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                fontSize: "16px",
+                fontWeight: 400,
+                color: "primary",
+                marginBottom: 2,
+              }}
+            >
+              {courseDetail?.description}
+            </Typography>
           </Box>
-          <Button variant="text" color="secondary" sx={{ fontSize: "16px", textTransform: "capitalize", fontWeight: 700 }}>Lihat Lainnya</Button>
+          <Button
+            variant="text"
+            color="secondary"
+            sx={{
+              fontSize: "16px",
+              textTransform: "capitalize",
+              fontWeight: 700,
+            }}
+          >
+            Lihat Lainnya
+          </Button>
         </Box>
       </Box>
     </Box>

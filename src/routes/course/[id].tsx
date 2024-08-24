@@ -6,7 +6,9 @@ import { useEffect } from "react";
 const CourseDetail = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/" onClick={() => {}}>
       Design

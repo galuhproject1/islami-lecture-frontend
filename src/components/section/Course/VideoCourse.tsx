@@ -2,8 +2,13 @@ import { Box, Typography } from "@mui/material";
 import { MdStarRate } from "react-icons/md";
 import { PiClockClockwiseBold } from "react-icons/pi";
 import { TbWorld, TbWorldLongitude } from "react-icons/tb";
+import { CourseDetail } from "../../../libs/Types/course";
+import { formatDate } from "date-fns";
 
-const VideoCourse = () => {
+type Props = {
+  dataDetail: CourseDetail;
+};
+const VideoCourse = ({ dataDetail }: Props) => {
   return (
     <Box
       sx={{
@@ -17,7 +22,7 @@ const VideoCourse = () => {
         <iframe
           width="100%"
           height="510"
-          src="https://www.youtube.com/embed/_iCbE-s9HdY"
+          src="https://www.youtube.com/embed/zNq-rD5FFjM?list=PLCnD2jU_siVpIZRY4-qutXcFYrQfMsqtR"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
@@ -33,8 +38,7 @@ const VideoCourse = () => {
           letterSpacing: "-0.02em",
         }}
       >
-        {" "}
-        E-Commerce Mobile App Design using Figma
+        {dataDetail?.name}
       </Typography>
       <Box
         sx={{
@@ -114,7 +118,10 @@ const VideoCourse = () => {
             fontFamily: "Mulish",
           }}
         >
-          <PiClockClockwiseBold color="black" size={20} /> Last update 12/2020
+          <PiClockClockwiseBold color="black" size={20} /> Last update{" "}
+          {dataDetail?.updated_at
+            ? formatDate(new Date(dataDetail.updated_at), "MMM yyyy")
+            : "N/A"}
         </Typography>
         <Typography
           sx={{
