@@ -10,6 +10,7 @@ import CustomButtom from "../reusable/Button/CustomButton";
 import { useUserStore } from "../../store/userStore";
 import { useNavigate } from "react-router-dom";
 import api from "../../libs/api";
+import Cookies from "js-cookie";
 
 const SurveyForm = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const SurveyForm = () => {
     user: state.user,
     registerUser: state.registerUser,
   }));
-  
+
   const platforms: string[] = ["Instagram", "Linkedin", "Facebook", "Youtube"];
 
   const [checkedPlatforms, setCheckedPlatforms] = useState<string[]>([]);
@@ -57,9 +58,21 @@ const SurveyForm = () => {
       }
 
       // Navigasi ke halaman selanjutnya setelah berhasil registrasi
-      //please redirect to home but set cookies 
-      navigate('/');
+      const { user, access_token } = response.data;
+      const role = user.role || "user"; // Pastikan `role` tersedia di objek `user`
 
+      const data = {
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        phone: user.phone,
+        email: user.email,
+        role, // Set role default jika tidak ada
+      };
+      
+      Cookies.set("access_token", access_token);
+      Cookies.set("user", JSON.stringify(data));
+      navigate("/");
     } catch (error: any) {
       console.error("Error:", error.message);
       // Handle error jika diperlukan
