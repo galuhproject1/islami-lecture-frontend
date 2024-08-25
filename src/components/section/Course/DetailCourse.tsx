@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useCourseStore from "../../../store/courseDetailStore";
 import { getCourseDetail } from "../../../api/course/get-course-detail";
-import LoadingScreen from "../../reusable/LoadingScreen";
 
 const DetailCourse = () => {
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ const DetailCourse = () => {
     fetchDetailCourse();
   }, [slug, setCourseDetail]);
 
-  if (!courseDetail) return <LoadingScreen />;
+  if (!courseDetail) return null;
 
   return (
     <Box

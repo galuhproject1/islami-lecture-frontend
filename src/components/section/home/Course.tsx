@@ -7,44 +7,41 @@ import "./styles.css";
 import { useEffect, useState } from "react";
 import { CourseData } from "../../../libs/Types/course";
 import api from "../../../libs/api";
+import { getCategories } from "../../../api/category/get-categories";
+import { CategoryType } from "../../../libs/Types/category";
+import { useNavigate } from "react-router-dom";
 
-type filter = {
-  name: string;
-  value: string;
-  icon: JSX.Element;
+const getRandomIcon = () => {
+  const icons = [BookmarkICon, PencilIcon, CodeIcon, SpeakerICon];
+  const randomIndex = Math.floor(Math.random() * icons.length);
+  return icons[randomIndex];
 };
-const CourseSection = () => {
-  const filter: filter[] = [
-    {
-      name: "All",
-      value: "all",
-      icon: <img src={BookmarkICon} alt="bookmark" />,
-    },
-    {
-      name: "Bahasa Arab",
-      value: "arab",
-      icon: <img src={PencilIcon} alt="pencil" />,
-    },
-    {
-      name: "Fiqih",
-      value: "fiqih",
-      icon: <img src={CodeIcon} alt="code" />,
-    },
-    {
-      name: "Sejarah Islam",
-      value: "sejarah",
-      icon: <img src={SpeakerICon} alt="code" />,
-    },
-    {
-      name: "Teologi",
-      value: "teologi",
-      icon: <img src={CodeIcon} alt="code" />,
-    },
-  ];
 
+const CourseSection = () => {
+  const navigate = useNavigate();
   const [dataCourse, setDataCourse] = useState<CourseData[]>([]);
+  const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await getCategories();
+      const allCategory = {
+        id: 0,
+        name: { en: "All" },
+        slug: { en: "all" },
+        type: "course_categories",
+        sequence: 0,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        courses_count: data.reduce(
+          (total: number, category: CategoryType) =>
+            total + category.courses_count,
+          0
+        ),
+      };
+      setDataCategory([allCategory, ...data]);
+    };
+
     const getAllCourse = async () => {
       try {
         const response = await api.get("/academic/courses");
@@ -53,8 +50,16 @@ const CourseSection = () => {
         console.error("Error fetching courses:", error);
       }
     };
+
+    fetchCategories();
     getAllCourse();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleCategoryClick = (slug: string) => {
+    navigate(`/e-course?category=${slug}`);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center relative overflow-x-hidden">
@@ -68,22 +73,22 @@ const CourseSection = () => {
       </p>
       <div className="flex flex-wrap justify-center items-center gap-4 my-8 w-full">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:flex gap-4">
-          {filter.map((item, index) => (
+          {dataCategory.map((category, index) => (
             <div
               key={index}
               className="cursor-pointer hover:bg-slate-200 rounded-xl"
+              onClick={() => handleCategoryClick(category.slug.en)}
             >
               <div className="border border-[#EBEEF3] p-4 rounded-xl flex justify-center items-center gap-4 w-full h-[80px]">
                 <div className="flex justify-center items-center w-[40px] h-[40px] rounded-md">
-                  {item.icon}
+                  <img src={getRandomIcon()} alt="bookmark" />,
                 </div>
-                <p className="text-[21px] font-bold">{item.name}</p>
+                <p className="text-[21px] font-bold">{category?.name.en}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
-
       <div className="w-full">
         <CourseCard dataCourse={dataCourse} />
       </div>
