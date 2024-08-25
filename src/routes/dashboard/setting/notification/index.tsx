@@ -1,58 +1,21 @@
-import { Box, Checkbox, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import SettingPage from "..";
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
-
-type Notification = {
-  id: number;
-  name: string;
-  status: string;
-  icon: JSX.Element;
-  description: string;
-  time: string;
-};
+import { useEffect, useState } from "react";
+import { getNotification } from "../../../../api/notification/getNotification";
+import { NotificationType } from "../../../../libs/Types/notifications";
+import { FaRegCheckSquare } from "react-icons/fa";
 
 const NotificationSetting = () => {
-  const notifications: Notification[] = [
-    {
-      id: 1,
-      name: "New Course",
-      status: "unread",
-      icon: (
-        <MdOutlineMarkEmailUnread
-          size={24}
-          className="text-[#FFBB54] font-bold"
-        />
-      ),
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-      time: "10:00",
-    },
-    {
-      id: 2,
-      name: "New Course",
-      status: "read",
-      icon: (
-        <MdOutlineMarkEmailUnread
-          size={24}
-          className="text-[#FFBB54] font-bold"
-        />
-      ),
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-      time: "10:00",
-    },
-    {
-      id: 3,
-      name: "New Course",
-      status: "read",
-      icon: (
-        <MdOutlineMarkEmailUnread
-          size={24}
-          className="text-[#FFBB54] font-bold"
-        />
-      ),
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-      time: "10:00",
-    },
-  ];
+  const [dataNotifications, setDataNotifications] = useState<NotificationType[]>([]);
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const { data } = await getNotification();
+
+      setDataNotifications(data.data);
+    };
+    fetchNotifications();
+  }, []);
   return (
     <SettingPage>
       <Box
@@ -68,19 +31,25 @@ const NotificationSetting = () => {
         }}
       >
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-          <Checkbox defaultChecked />
+          <Button variant="text" sx={{ gap: 1 }}>
+            <FaRegCheckSquare
+              size={24}
+              className="text-[#FFBB54] font-bold"
+            />
           <Typography
             sx={{
               fontSize: "16px",
               fontWeight: 400,
               color: "#1F2F54",
               fontFamily: "Mulish",
+              textTransform: "capitalize",
             }}
           >
             Tandai telah terbaca
           </Typography>
+          </Button>
         </Box>
-        {notifications.map((notification) => (
+        {dataNotifications.map((notification) => (
           <Box
             key={notification.id}
             sx={{
@@ -107,7 +76,10 @@ const NotificationSetting = () => {
                   justifyContent: "center",
                 }}
               >
-                {notification.icon}
+                <MdOutlineMarkEmailUnread
+                  size={24}
+                  className="text-[#FFBB54] font-bold"
+                />
               </Box>
               <Box>
                 <Typography
@@ -118,7 +90,7 @@ const NotificationSetting = () => {
                     fontFamily: "Mulish",
                   }}
                 >
-                  {notification.name}
+                  {notification?.data?.message}
                 </Typography>
                 <Typography
                   sx={{
@@ -128,7 +100,7 @@ const NotificationSetting = () => {
                     fontFamily: "Mulish",
                   }}
                 >
-                  {notification.description}
+                  {notification?.data?.url}
                 </Typography>
               </Box>
             </Box>
@@ -148,7 +120,7 @@ const NotificationSetting = () => {
                   fontFamily: "Mulish",
                 }}
               >
-                {notification.time}
+                {notification?.created_at}
               </Typography>
               <Box
                 sx={{
