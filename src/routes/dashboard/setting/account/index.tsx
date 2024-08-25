@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import CustomButtom from "../../../../components/reusable/Button/CustomButton";
 import { getUser } from "../../../../api/user/get-user";
 import { updateEmail } from "../../../../api/user/update-email";
+import { updatePassword } from "../../../../api/user/update-password";
 
 const AccountSetting = () => {
-  const [newPassword, setNewPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<any>(null);
   const [newEmail, setNewEmail] = useState<string>("");
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [error, setError] = useState<any>(null);
 
@@ -52,6 +54,12 @@ const AccountSetting = () => {
     }
   };
 
+  const handleOldPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setOldPassword(event.target.value);
+  };
+
   const handleNewPasswordChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -62,6 +70,21 @@ const AccountSetting = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setConfirmPassword(event.target.value);
+  };
+
+  const handleUpdatePassword = async () => {
+    const result = await updatePassword(oldPassword, newPassword, confirmPassword);
+
+    if (result.success) {
+      setSuccessMessage("Password berhasil diubah");
+      setError(null);
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } else {
+      setError(result.error);
+      setSuccessMessage(null);
+    }
   };
   return (
     <SettingPage>
@@ -166,6 +189,8 @@ const AccountSetting = () => {
               <CustomInput
                 placeholder="Masukkan password lama anda"
                 type="password"
+                onChange={handleOldPasswordChange}
+                value={oldPassword}
               />
 
               <CustomInput
@@ -179,19 +204,17 @@ const AccountSetting = () => {
                 type="password"
                 onChange={hanldeConfirmPasswordChange}
                 value={confirmPassword}
-                helperText={
-                  newPassword !== confirmPassword ? "Password tidak cocok" : ""
-                }
               />
             </>
           )}
         </Box>
         <Box width={"50%"}>
           <CustomButtom
+            type="submit"
             variant="contained"
             backroundColor="royalblue"
             text="Ubah Password"
-            onClick={() => {}}
+            onClick={handleUpdatePassword}
           />
         </Box>
       </Box>

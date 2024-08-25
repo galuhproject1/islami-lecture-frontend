@@ -5,9 +5,12 @@ import { useEffect, useState } from "react";
 import { getNotification } from "../../../../api/notification/getNotification";
 import { NotificationType } from "../../../../libs/Types/notifications";
 import { FaRegCheckSquare } from "react-icons/fa";
+import NothingNotif from "../../../../components/reusable/EmptyState/NothingNotif";
 
 const NotificationSetting = () => {
-  const [dataNotifications, setDataNotifications] = useState<NotificationType[]>([]);
+  const [dataNotifications, setDataNotifications] = useState<
+    NotificationType[]
+  >([]);
   useEffect(() => {
     const fetchNotifications = async () => {
       const { data } = await getNotification();
@@ -15,6 +18,7 @@ const NotificationSetting = () => {
       setDataNotifications(data.data);
     };
     fetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <SettingPage>
@@ -31,24 +35,28 @@ const NotificationSetting = () => {
         }}
       >
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-          <Button variant="text" sx={{ gap: 1 }}>
-            <FaRegCheckSquare
-              size={24}
-              className="text-[#FFBB54] font-bold"
-            />
-          <Typography
+          <Button
+            variant="text"
             sx={{
-              fontSize: "16px",
-              fontWeight: 400,
-              color: "#1F2F54",
-              fontFamily: "Mulish",
-              textTransform: "capitalize",
+              gap: 1,
+              display: dataNotifications.length > 0 ? "flex" : "none",
             }}
           >
-            Tandai telah terbaca
-          </Typography>
+            <FaRegCheckSquare size={24} className="text-[#FFBB54] font-bold" />
+            <Typography
+              sx={{
+                fontSize: "16px",
+                fontWeight: 400,
+                color: "#1F2F54",
+                fontFamily: "Mulish",
+                textTransform: "capitalize",
+              }}
+            >
+              Tandai telah terbaca
+            </Typography>
           </Button>
         </Box>
+        {dataNotifications.length === 0 && <NothingNotif />}
         {dataNotifications.map((notification) => (
           <Box
             key={notification.id}

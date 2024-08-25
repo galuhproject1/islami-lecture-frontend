@@ -1,77 +1,32 @@
 import { Box, Button, Paper, Popper, Typography } from "@mui/material";
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { NotificationType } from "../../../libs/Types/notifications";
+import { useEffect, useState } from "react";
+import { getNotification } from "../../../api/notification/getNotification";
+import { format } from "date-fns";
+import NothingNotif from "../EmptyState/NothingNotif";
 
 type Props = {
   openPopper: boolean;
   anchorEl: null | HTMLElement;
   id: string | undefined;
 };
-
-type Notification = {
-  id: number;
-  name: string;
-  status: string;
-  icon: JSX.Element;
-  description: string;
-  time: string;
-};
 const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
   const navigate = useNavigate();
-  const notifications: Notification[] = [
-    {
-      id: 1,
-      name: "New Course",
-      status: "unread",
-      icon: (
-        <MdOutlineMarkEmailUnread
-          size={24}
-          className="text-[#FFBB54] font-bold"
-        />
-      ),
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-      time: "10:00",
-    },
-    {
-      id: 2,
-      name: "New Course",
-      status: "read",
-      icon: (
-        <MdOutlineMarkEmailUnread
-          size={48}
-          className="text-[#FFBB54] font-bold"
-        />
-      ),
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-      time: "10:00",
-    },
-    {
-      id: 3,
-      name: "New Course",
-      status: "read",
-      icon: (
-        <MdOutlineMarkEmailUnread
-          size={48}
-          className="text-[#FFBB54] font-bold"
-        />
-      ),
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-      time: "10:00",
-    },
-    {
-      id: 4,
-      name: "New Course",
-      status: "read",
-      icon: (
-        <MdOutlineMarkEmailUnread
-          size={48}
-          className="text-[#FFBB54] font-bold"
-        />
-      ),
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-      time: "10:00",
-    },
-  ];
+  const [dataNotifications, setDataNotifications] = useState<
+    NotificationType[]
+  >([]);
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const { data } = await getNotification();
+
+      setDataNotifications(data.data);
+    };
+    fetchNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Popper
       id={id}
@@ -92,7 +47,10 @@ const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
           Notification
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
-          {notifications.slice(0, 3).map((notification) => (
+          {dataNotifications.length === 0 && (
+            <NothingNotif />
+          )}
+          {dataNotifications.slice(0, 3).map((notification) => (
             <Box
               key={notification.id}
               sx={{ display: "flex", gap: 2, alignItems: "center" }}
@@ -108,7 +66,10 @@ const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
                   backgroundColor: "#E8E8E8",
                 }}
               >
-                {notification.icon}
+                <MdOutlineMarkEmailUnread
+                  size={24}
+                  className="text-[#FFBB54] font-bold"
+                />
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                 <Typography
@@ -119,7 +80,7 @@ const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
                     color: "primary",
                   }}
                 >
-                  {notification.name}
+                  {notification?.data?.message}
                 </Typography>
                 <Typography
                   sx={{
@@ -129,7 +90,9 @@ const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
                     color: "primary",
                   }}
                 >
-                  {notification.time}
+                  {notification
+                    ? format(new Date(notification?.created_at), "dd MMM yyyy")
+                    : "N/A"}
                 </Typography>
               </Box>
             </Box>
@@ -143,6 +106,7 @@ const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
             fontWeight: 700,
             textTransform: "none",
             fontSize: "16px",
+            display: dataNotifications.length === 0 ? "none" : "block",
           }}
           onClick={() => {
             navigate("/dashboard/setting/notification");
