@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import AccordionCourse from "../../reusable/AccordionCourse";
 import VideoCourse from "./VideoCourse";
 import TabsCourse from "./TabsCourse";
-import ReviewCourse from "./ReviewCourse";
+// import ReviewCourse from "./ReviewCourse";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useCourseStore from "../../../store/courseDetailStore";
@@ -58,7 +58,8 @@ const DetailCourse = () => {
           </Typography>
           <AccordionCourse dataDetail={courseDetail}/>
         </Box>
-        <ReviewCourse />
+        {/* will be use */}
+        {/* <ReviewCourse /> */}
       </Box>
 
       <Box
