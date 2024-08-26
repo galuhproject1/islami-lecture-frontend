@@ -2,10 +2,10 @@ import { MdStarRate } from "react-icons/md";
 import { priceFormat } from "../../../utils/priceFormat";
 import { useLocation, useNavigate } from "react-router-dom";
 import CourseImage from "../../../assets/images/ilustration/course.png";
-import { CourseData } from "../../../libs/Types/course";
+import { Product } from "../../../libs/Types/product";
 
 type Props = {
-  dataCourse: CourseData[];
+  dataCourse: Product[];
 };
 
 const CourseCard = ({ dataCourse }: Props) => {
@@ -27,13 +27,13 @@ const CourseCard = ({ dataCourse }: Props) => {
           key={index}
         >
           <div className="relative">
-            {item.review && (
+            {/* {item.review && (
               <div className="absolute top-4 right-4 text-[#2A23C2] bg-[#DBD7F4] p-2 rounded-md font-bold">
                 Best Seller
               </div>
-            )}
+            )} */}
             <img
-              src={CourseImage}
+              src={item.image === null ? item?.image : CourseImage}
               alt="course"
               className="w-full rounded-t-xl"
             />
@@ -57,16 +57,16 @@ const CourseCard = ({ dataCourse }: Props) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[20px] md:text-[24px] font-bold text-[#FF4363]">
-                  Rp {priceFormat(300000)}
+                  Rp {priceFormat(item.price)}
                 </p>
                 <p className="text-[16px] md:text-[20px] font-bold text-[#9A9AB0] line-through">
-                  Rp {priceFormat(250000 + 50000)}
+                  Rp {priceFormat(item.price * 2)}
                 </p>
               </div>
               <button
                 className="bg-[#3D60DE] text-white p-2 md:p-4 rounded-xl font-bold text-[14px] md:text-[16px]"
                 onClick={() => {
-                  navigate(`/e-course/${item.slug}`);
+                  navigate(`/e-course/${item?.id}`);
                   window.scrollTo(0, 0);
                 }}
               >

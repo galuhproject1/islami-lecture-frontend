@@ -5,28 +5,28 @@ import TabsCourse from "./TabsCourse";
 // import ReviewCourse from "./ReviewCourse";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import useCourseStore from "../../../store/courseDetailStore";
-import { getCourseDetail } from "../../../api/course/get-course-detail";
+import { getProductDetail } from "../../../api/product/get-product-detail";
+import useProductStore from "../../../store/productDetailSrore";
 
 const DetailCourse = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
-
-  const { courseDetail, setCourseDetail } = useCourseStore();
+  console.log(slug);
+  const {productDetail, setCourseDetail} = useProductStore();
 
   useEffect(() => {
-    const fetchDetailCourse = async () => {
-      const { data, error } = await getCourseDetail(slug as string);
+    const fetchDetailProduct = async () => {
+      const { data, error } = await getProductDetail(slug as string);
       if (data) {
-        setCourseDetail(data[0]); // Assuming you only need the first course
+        setCourseDetail(data); // Assuming you only need the first course
       } else {
         console.error("Error fetching courses:", error);
       }
     };
-    fetchDetailCourse();
-  }, [slug, setCourseDetail]);
+    fetchDetailProduct();
+  }, [slug]);
 
-  if (!courseDetail) return null;
+  if (!productDetail) return null;
 
   return (
     <Box
@@ -47,7 +47,7 @@ const DetailCourse = () => {
           gap: 2,
         }}
       >
-        <VideoCourse dataDetail={courseDetail} />
+        <VideoCourse dataDetail={productDetail} />
         <TabsCourse inClass={false} />
         <Box sx={{ backgroundColor: "white", padding: 4, borderRadius: "8px" }}>
           <Typography
@@ -55,7 +55,7 @@ const DetailCourse = () => {
           >
             Modul Pembelajaran
           </Typography>
-          <AccordionCourse dataDetail={courseDetail}/>
+          <AccordionCourse dataDetail={productDetail}/>
         </Box>
         {/* will be use */}
         {/* <ReviewCourse /> */}
@@ -82,7 +82,7 @@ const DetailCourse = () => {
             borderRadius: "8px",
           }}
         >
-          <AccordionCourse dataDetail={courseDetail} />
+          <AccordionCourse dataDetail={productDetail} />
         </Box>
         <Box
           sx={{

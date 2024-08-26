@@ -1,7 +1,6 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { FaCheck } from "react-icons/fa6";
-import useCourseStore from "../../../../store/courseDetailStore";
-import LoadingScreen from "../../../reusable/LoadingScreen";
+import useProductStore from "../../../../store/productDetailSrore";
 
 const overview: string[] = [
   "Create mobile app designs from scratch",
@@ -18,9 +17,10 @@ const requirements: string[] = [
 ];
 
 const TabOne = () => {
-  const courseDetail = useCourseStore((state) => state.courseDetail);
+  const productDetail = useProductStore((state) => state.productDetail);
 
-  if (!courseDetail) return <LoadingScreen />;
+  if (!productDetail) return null;
+  console.log(productDetail);
 
   return (
     <Box>
@@ -97,7 +97,7 @@ const TabOne = () => {
                 marginBottom: 2,
               }}
             >
-              {courseDetail?.description}
+              {productDetail?.description}
             </Typography>
           </Box>
           <Button

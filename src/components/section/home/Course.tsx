@@ -5,11 +5,11 @@ import SpeakerICon from "../../../assets/images/icon/speaker.svg";
 import CourseCard from "../../reusable/Card/CourseCard";
 import "./styles.css";
 import { useEffect, useState } from "react";
-import { CourseData } from "../../../libs/Types/course";
-import api from "../../../libs/api";
 import { getCategories } from "../../../api/category/get-categories";
 import { CategoryType } from "../../../libs/Types/category";
 import { useNavigate } from "react-router-dom";
+import { getProducts } from "../../../api/product/get-products";
+import { Product } from "../../../libs/Types/product";
 
 const getRandomIcon = () => {
   const icons = [BookmarkICon, PencilIcon, CodeIcon, SpeakerICon];
@@ -19,7 +19,7 @@ const getRandomIcon = () => {
 
 const CourseSection = () => {
   const navigate = useNavigate();
-  const [dataCourse, setDataCourse] = useState<CourseData[]>([]);
+  const [dataProducts, setDataProducts] = useState<Product[]>([]);
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
 
   useEffect(() => {
@@ -42,18 +42,13 @@ const CourseSection = () => {
       setDataCategory([allCategory, ...data]);
     };
 
-    const getAllCourse = async () => {
-      try {
-        const response = await api.get("/academic/courses");
-        setDataCourse(response.data.data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
+    const fetchProducts = async () => {
+      const { data } = await getProducts();
+      setDataProducts(data.data);
     };
 
     fetchCategories();
-    getAllCourse();
-
+    fetchProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,7 +85,7 @@ const CourseSection = () => {
         </div>
       </div>
       <div className="w-full">
-        <CourseCard dataCourse={dataCourse} />
+        <CourseCard dataCourse={dataProducts} />
       </div>
       <button className="bg-[#FF4363] text-white py-4 px-8 rounded-xl font-bold text-[16px] mt-12">
         Browse All

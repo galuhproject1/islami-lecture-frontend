@@ -174,7 +174,7 @@ const Navbar = () => {
         {/* Menu ikon pada kanan untuk tampilan desktop */}
         <div className="hidden md:flex items-center gap-8 cursor-pointer">
           {/* <CiHeart size={24} /> will use in phase 2 */}
-          <button onClick={handleClickPopper}>
+          <button onClick={handleClickPopper} className={user === "{}" ? "hidden" : ""}>
             <CiBellOn size={24} />
           </button>
           {user !== "{}" ? (
@@ -189,7 +189,9 @@ const Navbar = () => {
               />
               <div className="hidden md:block text-start">
                 <p className="text-[16px] font-bold">{JSON.parse(user).name}</p>
-                <p className="text-[12px] text-[#9A9AB0]">{JSON.parse(user).email}</p>
+                <p className="text-[12px] text-[#9A9AB0]">
+                  {JSON.parse(user).email}
+                </p>
               </div>
             </button>
           ) : (

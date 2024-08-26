@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { MdStarRate } from "react-icons/md";
 import { PiClockClockwiseBold } from "react-icons/pi";
 import { TbWorld, TbWorldLongitude } from "react-icons/tb";
-import { CourseDetail } from "../../../libs/Types/course";
 import { formatDate } from "date-fns";
+import { Product } from "../../../libs/Types/product";
 
 type Props = {
-  dataDetail: CourseDetail;
+  dataDetail: Product;
 };
 const VideoCourse = ({ dataDetail }: Props) => {
   return (
