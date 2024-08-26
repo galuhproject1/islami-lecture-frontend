@@ -9,13 +9,13 @@ import CourseCard from "../../../components/reusable/Card/CourseCard";
 import BannerDashboard from "../../../components/section/dashboard/BannerDashboard";
 import { CiSearch } from "react-icons/ci";
 import { useEffect, useState } from "react";
-import { CourseData } from "../../../libs/Types/course";
 import api from "../../../libs/api";
 import { CgClose } from "react-icons/cg";
+import { Product } from "../../../libs/Types/product";
 
 const Explore = () => {
   const [search, setSearch] = useState<string>("");
-  const [dataCourse, setDataCourse] = useState<CourseData[]>([]);
+  const [dataProducts, setDataProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -24,7 +24,7 @@ const Explore = () => {
     setSearch(event.target.value);
   };
 
-  const getAllCourse = async (page: number, search: string) => {
+  const getAllProducts = async (page: number, search: string) => {
     try {
       const params: any = { page };
 
@@ -32,8 +32,8 @@ const Explore = () => {
         params.filter = { search };
       }
 
-      const response = await api.get("/academic/courses", { params });
-      setDataCourse(response.data.data);
+      const response = await api.get("/shop/products", { params });
+      setDataProducts(response.data.data);
       setCurrentPage(response.data.current_page);
       setTotalPages(response.data.last_page);
     } catch (error) {
@@ -45,7 +45,7 @@ const Explore = () => {
     // Load data pertama kali tanpa debounce
     const loadInitialData = async () => {
       setIsLoading(true);
-      await getAllCourse(currentPage, search);
+      await getAllProducts(currentPage, search);
       setIsLoading(false);
     };
 
@@ -56,7 +56,7 @@ const Explore = () => {
     // Load data dengan debounce saat currentPage atau search berubah
     const delayDebounceFn = setTimeout(async () => {
       setIsLoading(true);
-      await getAllCourse(currentPage, search);
+      await getAllProducts(currentPage, search);
       setIsLoading(false);
     }, 2000);
 
@@ -116,7 +116,7 @@ const Explore = () => {
               ))}
             </div>
           ) : (
-            <CourseCard dataCourse={dataCourse} />
+            <CourseCard dataCourse={dataProducts} />
           )}
         </div>
       </div>

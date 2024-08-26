@@ -4,21 +4,37 @@ import ProgressCourse from "../../../reusable/ProgressCourse";
 import ActivityProgress from "../ActivityProgress";
 import BannerDashboard from "../BannerDashboard";
 import api from "../../../../libs/api";
-import { CourseData } from "../../../../libs/Types/course";
+import { Product } from "../../../../libs/Types/product";
+import { Course } from "../../../../libs/Types/course";
 
 const User = () => {
-  const [dataCourse, setDataCourse] = useState<CourseData[]>([]);
+  const [dataCourses, setDataCourses] = useState<Course[]>([]);
+  const [dataProducts, setDataProducts] = useState<Product[]>([]);
   useEffect(() => {
-    const getAllCourse = async () => {
+    const getAllCourses = async () => {
       try {
-        const response = await api.get("/academic/courses");
-        setDataCourse(response.data.data);
+        const response = await api.get("/academic/courses",);
+        setDataCourses(response.data.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
     };
-    getAllCourse();
+    const getAllProducts = async () => {
+      try {
+        const response = await api.get("/shop/products",);
+        setDataProducts(response.data.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    getAllCourses();
+    getAllProducts();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  console.log(dataCourses, "dataCourses");
 
   return (
     <div className="font-mulish">
@@ -29,7 +45,7 @@ const User = () => {
             <h1 className="text-2xl font-bold">Lanjutkan belajar yuk!</h1>
             <button className="text-[#FF4363]">See all</button>
           </div>
-          <ProgressCourse />
+          <ProgressCourse dataCourse={dataCourses} />
         </div>
         <div>
           <ActivityProgress />
@@ -38,7 +54,7 @@ const User = () => {
       <div>
         <h1 className="text-2xl font-bold">Rekomendasi belajarmu</h1>
         <div className="mt-4">
-          <CourseCard dataCourse={dataCourse} />
+          <CourseCard dataCourse={dataProducts} />
         </div>
       </div>
     </div>
