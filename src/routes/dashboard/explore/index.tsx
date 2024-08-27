@@ -4,6 +4,13 @@ import {
   TextField,
   IconButton,
   Skeleton,
+  FormControl,
+  InputLabel,
+  Select,
+  OutlinedInput,
+  MenuItem,
+  Checkbox,
+  ListItemText,
 } from "@mui/material";
 import CourseCard from "../../../components/reusable/Card/CourseCard";
 import BannerDashboard from "../../../components/section/dashboard/BannerDashboard";
@@ -12,24 +19,37 @@ import { useEffect, useState } from "react";
 import api from "../../../libs/api";
 import { CgClose } from "react-icons/cg";
 import { Product } from "../../../libs/Types/product";
+import NoData from "../../../assets/images/ilustration/no-data.png";
+import { getCategoriesProduct } from "../../../api/category/get-categories-product";
+import { CategoryType } from "../../../libs/Types/category";
 
 const Explore = () => {
   const [search, setSearch] = useState<string>("");
   const [dataProducts, setDataProducts] = useState<Product[]>([]);
+  const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
+  const [category, setCategory] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showText, setShowText] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false); // State untuk mengontrol Select
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
-  const getAllProducts = async (page: number, search: string) => {
+  const getAllProducts = async (page: number, search: string, categories: string[]) => {
     try {
       const params: any = { page };
 
       if (search.trim() !== "") {
-        params.filter = { search };
+        params.filter = {
+          search: search.trim(),
+        };
+      }
+
+      if (categories.length > 0) {
+        params["filter[categories]"] = categories.join(",");
       }
 
       const response = await api.get("/shop/products", { params });
@@ -41,27 +61,47 @@ const Explore = () => {
     }
   };
 
+  const fetchCategoriesProduct = async () => {
+    const { data } = await getCategoriesProduct();
+    const allCategory = {
+      id: 0,
+      name: { en: "All" },
+      slug: { en: "all" },
+      type: "course_categories",
+      sequence: 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      courses_count: data.reduce(
+        (total: number, category: CategoryType) =>
+          total + category.courses_count,
+        0
+      ),
+    };
+    setDataCategory([allCategory, ...data]);
+  };
+
   useEffect(() => {
-    // Load data pertama kali tanpa debounce
+    fetchCategoriesProduct();
+  }, []);
+
+  useEffect(() => {
     const loadInitialData = async () => {
-      setIsLoading(true);
-      await getAllProducts(currentPage, search);
-      setIsLoading(false);
+      await getAllProducts(currentPage, search, category);
     };
 
     loadInitialData();
-  }, []); // hanya dijalankan sekali saat komponen di-mount
+  }, []);
 
   useEffect(() => {
-    // Load data dengan debounce saat currentPage atau search berubah
     const delayDebounceFn = setTimeout(async () => {
       setIsLoading(true);
-      await getAllProducts(currentPage, search);
+      await getAllProducts(currentPage, search, category);
+      setShowText(true);
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [currentPage, search]);
+  }, [currentPage, search, category]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -71,37 +111,84 @@ const Explore = () => {
     setCurrentPage(value);
   };
 
+  const handleChangeCategory = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+    setCategory(typeof value === "string" ? value.split(",") : value);
+  };
+
   return (
     <div className="font-mulish">
       <BannerDashboard />
-      <TextField
-        id="outlined-basic"
-        label="Search"
-        variant="outlined"
-        sx={{ width: "100%", marginY: "20px" }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <CiSearch />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                sx={{ display: !search ? "none" : "block" }}
-                onClick={() => setSearch("")}
-              >
-                <CgClose />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        onChange={handleSearch}
-        value={search}
-      />
-
+      <div className="flex justify-between items-center gap-4">
+        <TextField
+          id="outlined-basic"
+          label="Search"
+          variant="outlined"
+          sx={{ width: "80%", marginY: "20px" }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <CiSearch />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  sx={{ display: !search ? "none" : "block" }}
+                  onClick={() => {
+                    setSearch("");
+                    setShowText(false);
+                    setCurrentPage(1);
+                  }}
+                >
+                  <CgClose />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          onChange={handleSearch}
+          value={search}
+        />
+        <div className="w-[20%]">
+          <FormControl sx={{ width: "100%" }}>
+            <InputLabel id="demo-multiple-checkbox-label">Kategori</InputLabel>
+            <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              placeholder="Kategori"
+              multiple
+              value={category}
+              onChange={handleChangeCategory}
+              input={<OutlinedInput label="Kategori" />}
+              renderValue={(selected) => selected.join(", ")}
+              open={open}
+              onOpen={() => setOpen(true)}
+              onClose={() => setOpen(false)}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 224,
+                    width: 250,
+                  },
+                },
+              }}
+            >
+              {dataCategory.map((cat) => (
+                <MenuItem key={cat.id} value={cat.slug.en} onClick={() => setOpen(false)}>
+                  <Checkbox checked={category.indexOf(cat.slug.en) > -1} />
+                  <ListItemText primary={cat.name.en} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+      </div>
       <div>
-        <h1 className="text-2xl font-bold">Hasil Pencarian</h1>
+        <h1 className={`text-2xl font-bold ${!showText ? "hidden" : "block"}`}>
+          Hasil Pencarian
+        </h1>
         <div className="mt-4">
           {isLoading ? (
             <div className="grid grid-cols-3 gap-4">
@@ -116,7 +203,16 @@ const Explore = () => {
               ))}
             </div>
           ) : (
-            <CourseCard dataCourse={dataProducts} />
+            <>
+              {dataProducts.length === 0 ? (
+                <div className="flex flex-col items-center justify-center">
+                  <img src={NoData} alt="no data" className="w-1/2 m-auto" />
+                  <p className="text-center">Tidak ada data</p>
+                </div>
+              ) : (
+                <CourseCard dataCourse={dataProducts} />
+              )}
+            </>
           )}
         </div>
       </div>
@@ -134,7 +230,10 @@ const Explore = () => {
             page={currentPage}
             onChange={handlePageChange}
             color="primary"
-            sx={{ marginTop: "20px" }}
+            sx={{
+              marginTop: "20px",
+              display: dataProducts.length === 0 ? "none" : "block",
+            }}
           />
         )}
       </div>
