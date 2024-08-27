@@ -66,8 +66,12 @@ const CourseCard = ({ dataCourse }: Props) => {
               <button
                 className="bg-[#3D60DE] text-white p-2 md:p-4 rounded-xl font-bold text-[14px] md:text-[16px]"
                 onClick={() => {
-                  navigate(`/e-course/${item?.id}`);
-                  window.scrollTo(0, 0);
+                  if (pathname === "/dashboard/explore") {
+                    navigate(`/dashboard/explore/${item?.id}`);
+                  } else {
+                    navigate(`/e-course/${item?.id}`);
+                    window.scrollTo(0, 0);
+                  }
                 }}
               >
                 Belajar Sekarang

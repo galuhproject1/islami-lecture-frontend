@@ -28,6 +28,7 @@ import Logout from "./routes/dashboard/setting/logout/index.tsx";
 import DetailClassPage from "./routes/dashboard/class/[id].tsx";
 import CreateClassPage from "./routes/dashboard/class/create.tsx";
 import ProtectedRoute from "./components/Protected/ProtectedRoute.tsx";
+import DetailProduct from "./routes/dashboard/explore/[id].tsx";
 
 const router = createBrowserRouter([
   {
@@ -126,6 +127,16 @@ const router = createBrowserRouter([
       <ProtectedRoute>
         <MainLayout>
           <Explore />
+        </MainLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard/explore/:slug",
+    element: (
+      <ProtectedRoute>
+        <MainLayout>
+          <DetailProduct />
         </MainLayout>
       </ProtectedRoute>
     ),

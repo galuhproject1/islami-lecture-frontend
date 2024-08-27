@@ -3,6 +3,7 @@ import VideoCourse from "../../components/section/Course/VideoCourse";
 import { FaCheck } from "react-icons/fa6";
 import CustomInput from "../../components/reusable/CustomInput";
 import { priceFormat } from "../../utils/priceFormat";
+import useProductStore from "../../store/productDetailSrore";
 
 type Price = {
   classPrice: number;
@@ -26,6 +27,10 @@ const CheckoutPage = () => {
   };
 
   price.totalPayment = price.classPrice - price.promo + price.serviceFee;
+
+  const productDetail = useProductStore((state) => state.productDetail);
+
+  if (!productDetail) return null;
   return (
     <Box
       sx={{
@@ -45,7 +50,7 @@ const CheckoutPage = () => {
           gap: 2,
         }}
       >
-        <VideoCourse />
+        <VideoCourse dataDetail={productDetail} />
       </Box>
 
       <Box
@@ -149,6 +154,7 @@ const CheckoutPage = () => {
             </Box>
           </Box>
           <Button
+            disabled
             sx={{
               width: "100%",
               height: "52px",
