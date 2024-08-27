@@ -5,11 +5,11 @@ import SpeakerICon from "../../../assets/images/icon/speaker.svg";
 import CourseCard from "../../reusable/Card/CourseCard";
 import "./styles.css";
 import { useEffect, useState } from "react";
-import { getCategories } from "../../../api/category/get-categories";
 import { CategoryType } from "../../../libs/Types/category";
 import { useNavigate } from "react-router-dom";
 import { getProducts } from "../../../api/product/get-products";
 import { Product } from "../../../libs/Types/product";
+import { getCategoriesProduct } from "../../../api/category/get-categories-product";
 
 const getRandomIcon = () => {
   const icons = [BookmarkICon, PencilIcon, CodeIcon, SpeakerICon];
@@ -23,8 +23,8 @@ const CourseSection = () => {
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const { data } = await getCategories();
+    const fetchCategoriesProduct = async () => {
+      const { data } = await getCategoriesProduct();
       const allCategory = {
         id: 0,
         name: { en: "All" },
@@ -47,7 +47,7 @@ const CourseSection = () => {
       setDataProducts(data.data);
     };
 
-    fetchCategories();
+    fetchCategoriesProduct();
     fetchProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -87,7 +87,7 @@ const CourseSection = () => {
       <div className="w-full">
         <CourseCard dataCourse={dataProducts} />
       </div>
-      <button className="bg-[#FF4363] text-white py-4 px-8 rounded-xl font-bold text-[16px] mt-12">
+      <button className="bg-[#FF4363] text-white py-4 px-8 rounded-xl font-bold text-[16px] mt-12" onClick={() => navigate("/e-course")}>
         Browse All
       </button>
       <div className="bg-radial-gradient-redvelvet"></div>

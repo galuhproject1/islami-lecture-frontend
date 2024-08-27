@@ -1,6 +1,6 @@
 import api from "../../libs/api";
 
-export const getCategories = async () => {
+export const getCategoriesProduct = async () => {
   try {
     const response = await api.get("/shop/product/categories");
     return { data: response.data, error: null };
