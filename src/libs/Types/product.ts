@@ -17,6 +17,35 @@ export type Category = {
   };
 };
 
+export type Lesson = {
+  id: number;
+  module_id: number;
+  sequence: number;
+  embed: string;
+  name: string;
+  slug: string;
+  description: string;
+  content: string;
+  meta: any;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Module = {
+  id: number;
+  course_id: number;
+  sequence: number;
+  name: string;
+  slug: string;
+  description: string;
+  meta: any;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+  lessons: Lesson[];
+};
+
 export type Course = {
   id: number;
   name: string;
@@ -27,12 +56,7 @@ export type Course = {
   created_at: string;
   updated_at: string;
   image: string;
-  pivot: {
-    itemable_type: string;
-    product_id: number;
-    itemable_id: number;
-  };
-  categories: Category[];
+  modules: Module[];
   media: any[];
 };
 
@@ -46,6 +70,7 @@ export type Itemable = {
   created_at: string;
   updated_at: string;
   image: string;
+  modules?: Module[];
   media: any[];
 };
 
@@ -70,7 +95,6 @@ export type Product = {
   created_at: string;
   updated_at: string;
   image: string;
-  courses: Course[];
-  items: Item[];
+  items?: Item[] | null;
   media: any[];
 };

@@ -40,14 +40,14 @@ export type Course = {
   modules: Module[];
 };
 
-// export type CourseDetail = {
-//   id: number;
-//   name: string;
-//   slug: string;
-//   description: string;
-//   meta: any | null;
-//   deleted_at: string | null;
-//   created_at: string;
-//   updated_at: string;
-//   modules: CourseModule[];
-// };
+export type CourseDetail = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  meta: any | null;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+  modules: any[];
+};

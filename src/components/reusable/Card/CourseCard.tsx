@@ -39,7 +39,9 @@ const CourseCard = ({ dataCourse }: Props) => {
             />
           </div>
           <div className="space-y-4 my-2">
-            <p className="text-[20px] md:text-[24px] font-bold">{item.name}</p>
+            <p className="text-[20px] md:text-[24px] font-bold">
+              {item.name.split(" ").slice(0, 2).join(" ")}
+            </p>
             <div className="flex items-center gap-4">
               <img
                 src={CourseImage}

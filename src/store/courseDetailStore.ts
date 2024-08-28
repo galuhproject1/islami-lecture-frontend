@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { CourseDetail } from '../libs/Types/course';
 
 type CourseStore = {

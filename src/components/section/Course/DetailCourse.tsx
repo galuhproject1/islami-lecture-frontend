@@ -11,7 +11,6 @@ import useProductStore from "../../../store/productDetailSrore";
 const DetailCourse = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
-  console.log(slug);
   const {productDetail, setCourseDetail} = useProductStore();
 
   useEffect(() => {
@@ -27,6 +26,7 @@ const DetailCourse = () => {
   }, [slug]);
 
   if (!productDetail) return null;
+  console.log(productDetail);
 
   return (
     <Box

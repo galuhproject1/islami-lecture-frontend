@@ -8,34 +8,52 @@ import {
 import { MdExpandMore } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
 import { Product } from "../../libs/Types/product";
+import { useVideoStore } from "../../store/videoStore";
 
 type Props = {
   dataDetail: Product;
 };
 
+function convertToEmbedUrl(url: string): string {
+  const videoId = new URL(url).searchParams.get('v');
+  return `https://www.youtube.com/embed/${videoId}`;
+}
+
+
 const AccordionCourse = ({ dataDetail }: Props) => {
-  console.log(dataDetail);
+  const setEmbedUrl = useVideoStore((state) => state.setEmbedUrl);
+  const items = dataDetail?.items?.[0];
+  const modules = items?.itemable?.modules;
+
+  const handleLessonClick = (url: string) => {
+    const embedUrl = convertToEmbedUrl(url);
+    scrollTo(0, 0);
+    setEmbedUrl(embedUrl);
+  };
+
   return (
     <Box>
-      {dataDetail?.courses.map((data) => (
-        <Accordion sx={{ boxShadow: "none", py: 1 }} key={data.id}>
+      {modules?.map((modules) => (
+        <Accordion sx={{ boxShadow: "none", py: 1 }} key={modules.id}>
           <AccordionSummary
             expandIcon={<MdExpandMore size={24} />}
             aria-controls="panel1-content"
             id="panel1-header"
           >
             <Typography sx={{ color: "#11142D", fontWeight: "bold" }}>
-              {data.name.split(" ").slice(0, 3).join(" ")}
+              {modules.name.split(" ").slice(0, 3).join(" ")}
             </Typography>
           </AccordionSummary>
 
-          {dataDetail?.items.map((item) => (
+          {modules.lessons.map((lesson) => (
             <AccordionDetails
-              key={item.id}
+              key={lesson.id}
+              onClick={() => handleLessonClick(lesson.embed)}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                "&:hover": { bgcolor: "#FF436315", cursor: "pointer" },
               }}
             >
               <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
@@ -60,7 +78,7 @@ const AccordionCourse = ({ dataDetail }: Props) => {
                     fontFamily: "Mulish",
                   }}
                 >
-                  {item?.itemable?.name}
+                  {lesson.name}
                 </Typography>
               </Box>
               <Typography

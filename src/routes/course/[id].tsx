@@ -2,6 +2,7 @@ import { Breadcrumbs, Link, Typography } from "@mui/material";
 import DetailCourse from "../../components/section/Course/DetailCourse";
 import { MdNavigateNext } from "react-icons/md";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const CourseDetail = () => {
   useEffect(() => {
@@ -9,15 +10,17 @@ const CourseDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { slug } = useParams();
+
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/" onClick={() => {}}>
-      Design
+      Islamic Lecture
     </Link>,
-    <Link underline="hover" key="2" color="inherit" href="/" onClick={() => {}}>
-      User Experience
-    </Link>,
+    // <Link underline="hover" key="2" color="inherit" href="/" onClick={() => {}}>
+    //   User Experience
+    // </Link>,
     <Typography key="3" color="inherit">
-      Mobile App Design
+      Product {slug}
     </Typography>,
   ];
   return (

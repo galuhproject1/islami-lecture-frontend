@@ -4,11 +4,13 @@ import { PiClockClockwiseBold } from "react-icons/pi";
 import { TbWorld, TbWorldLongitude } from "react-icons/tb";
 import { formatDate } from "date-fns";
 import { Product } from "../../../libs/Types/product";
+import { useVideoStore } from "../../../store/videoStore";
 
 type Props = {
   dataDetail: Product;
 };
 const VideoCourse = ({ dataDetail }: Props) => {
+  const embedUrl = useVideoStore((state) => state.embedUrl);
   return (
     <Box
       sx={{
@@ -22,7 +24,7 @@ const VideoCourse = ({ dataDetail }: Props) => {
         <iframe
           width="100%"
           height="510"
-          src="https://www.youtube.com/embed/zNq-rD5FFjM?list=PLCnD2jU_siVpIZRY4-qutXcFYrQfMsqtR"
+          src={embedUrl || "https://www.youtube.com/embed/zNq-rD5FFjM?list=PLCnD2jU_siVpIZRY4-qutXcFYrQfMsqtR"}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>

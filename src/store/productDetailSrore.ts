@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { Product } from '../libs/Types/product'; // Assume this is the type for product detail
 
 // In ../../../store/productDetailSrore

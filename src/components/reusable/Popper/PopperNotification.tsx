@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getNotification } from "../../../api/notification/getNotification";
 import { format } from "date-fns";
 import NothingNotif from "../EmptyState/NothingNotif";
+import Cookies from "js-cookie";
 
 type Props = {
   openPopper: boolean;
@@ -23,10 +24,13 @@ const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
 
       setDataNotifications(data.data);
     };
-    fetchNotifications();
+    const user = Cookies.get("user");
+
+    if (user) {
+      fetchNotifications();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <Popper
       id={id}
@@ -47,9 +51,7 @@ const PopperNotification = ({ id, openPopper, anchorEl }: Props) => {
           Notification
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
-          {dataNotifications.length === 0 && (
-            <NothingNotif />
-          )}
+          {dataNotifications.length === 0 && <NothingNotif />}
           {dataNotifications.slice(0, 3).map((notification) => (
             <Box
               key={notification.id}
