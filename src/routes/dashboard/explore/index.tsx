@@ -22,23 +22,32 @@ import { Product } from "../../../libs/Types/product";
 import NoData from "../../../assets/images/ilustration/no-data.png";
 import { getCategoriesProduct } from "../../../api/category/get-categories-product";
 import { CategoryType } from "../../../libs/Types/category";
+import { getTags } from "../../../api/category/get-tag";
+import { Tag } from "../../../libs/Types/tag";
 
 const Explore = () => {
   const [search, setSearch] = useState<string>("");
   const [dataProducts, setDataProducts] = useState<Product[]>([]);
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
   const [category, setCategory] = useState<string[]>([]);
+  const [dataTag, setDataTag] = useState<Tag[]>([]);
+  const [tag, setTag] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showText, setShowText] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false); // State untuk mengontrol Select
-
+  const [openCategory, setOpenCategory] = useState<boolean>(false);
+  const [openTag, setOpenTag] = useState<boolean>(false);
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
-  const getAllProducts = async (page: number, search: string, categories: string[]) => {
+  const getAllProducts = async (
+    page: number,
+    search: string,
+    categories: string[],
+    tags: string[]
+  ) => {
     try {
       const params: any = { page };
 
@@ -50,6 +59,10 @@ const Explore = () => {
 
       if (categories.length > 0) {
         params["filter[categories]"] = categories.join(",");
+      }
+
+      if (tags.length > 0) {
+        params["filter[tags]"] = tags.join(",");
       }
 
       const response = await api.get("/shop/products", { params });
@@ -80,13 +93,19 @@ const Explore = () => {
     setDataCategory([allCategory, ...data]);
   };
 
+  const fetchTags = async () => {
+    const { data } = await getTags();
+    setDataTag(data);
+  };
+
   useEffect(() => {
     fetchCategoriesProduct();
+    fetchTags();
   }, []);
 
   useEffect(() => {
     const loadInitialData = async () => {
-      await getAllProducts(currentPage, search, category);
+      await getAllProducts(currentPage, search, category, tag);
     };
 
     loadInitialData();
@@ -95,13 +114,13 @@ const Explore = () => {
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
       setIsLoading(true);
-      await getAllProducts(currentPage, search, category);
+      await getAllProducts(currentPage, search, category, tag);
       setShowText(true);
       setIsLoading(false);
     }, 1000);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [currentPage, search, category]);
+  }, [currentPage, search, category, tag]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -118,6 +137,13 @@ const Explore = () => {
     setCategory(typeof value === "string" ? value.split(",") : value);
   };
 
+  const handleChangeTag = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+    setTag(typeof value === "string" ? value.split(",") : value);
+  };
+
   return (
     <div className="font-mulish">
       <BannerDashboard />
@@ -126,7 +152,7 @@ const Explore = () => {
           id="outlined-basic"
           label="Search"
           variant="outlined"
-          sx={{ width: "80%", marginY: "20px" }}
+          sx={{ width: "70%", marginY: "20px" }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -151,7 +177,7 @@ const Explore = () => {
           onChange={handleSearch}
           value={search}
         />
-        <div className="w-[20%]">
+        <div className="w-[15%]">
           <FormControl sx={{ width: "100%" }}>
             <InputLabel id="demo-multiple-checkbox-label">Kategori</InputLabel>
             <Select
@@ -163,9 +189,9 @@ const Explore = () => {
               onChange={handleChangeCategory}
               input={<OutlinedInput label="Kategori" />}
               renderValue={(selected) => selected.join(", ")}
-              open={open}
-              onOpen={() => setOpen(true)}
-              onClose={() => setOpen(false)}
+              open={openCategory}
+              onOpen={() => setOpenCategory(true)}
+              onClose={() => setOpenCategory(false)}
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -176,7 +202,48 @@ const Explore = () => {
               }}
             >
               {dataCategory.map((cat) => (
-                <MenuItem key={cat.id} value={cat.slug.en} onClick={() => setOpen(false)}>
+                <MenuItem
+                  key={cat.id}
+                  value={cat.slug.en}
+                  onClick={() => setOpenCategory(false)}
+                >
+                  <Checkbox checked={category.indexOf(cat.slug.en) > -1} />
+                  <ListItemText primary={cat.name.en} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div className="w-[15%]">
+          <FormControl sx={{ width: "100%" }}>
+            <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+            <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              placeholder="Tag"
+              multiple
+              value={tag}
+              onChange={handleChangeTag}
+              input={<OutlinedInput label="Tag" />}
+              renderValue={(selected) => selected.join(", ")}
+              open={openTag}
+              onOpen={() => setOpenTag(true)}
+              onClose={() => setOpenTag(false)}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 224,
+                    width: 250,
+                  },
+                },
+              }}
+            >
+              {dataTag.map((cat) => (
+                <MenuItem
+                  key={cat.id}
+                  value={cat.slug.en}
+                  onClick={() => setOpenTag(false)}
+                >
                   <Checkbox checked={category.indexOf(cat.slug.en) > -1} />
                   <ListItemText primary={cat.name.en} />
                 </MenuItem>

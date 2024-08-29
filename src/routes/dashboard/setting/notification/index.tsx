@@ -41,14 +41,16 @@ const NotificationSetting = () => {
     return formatDistanceToNowStrict(date);
   }
 
-  const updateNotifications = async (id: string) => {
+  const updateNotifications = async (id?: string) => {
     const data = {
       notification_ids: id,
     };
     try {
       const response = await api.post("/user/notifications/read", data);
       if (response.status === 200) {
-        setDetailNotif(true);
+        if (data?.notification_ids !== undefined) {
+          setDetailNotif(true);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -71,7 +73,7 @@ const NotificationSetting = () => {
       >
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
           <Button
-            disabled
+            onClick={() => updateNotifications()}
             variant="text"
             sx={{
               gap: 1,
@@ -88,7 +90,7 @@ const NotificationSetting = () => {
                 textTransform: "capitalize",
               }}
             >
-              Tandai telah terbaca
+              Tandai terbaca semua
             </Typography>
           </Button>
         </Box>
